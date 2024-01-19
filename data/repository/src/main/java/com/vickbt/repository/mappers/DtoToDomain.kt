@@ -4,8 +4,9 @@ import com.vickbt.domain.models.Condition
 import com.vickbt.domain.models.Current
 import com.vickbt.domain.models.CurrentWeather
 import com.vickbt.domain.models.DayForecast
-import com.vickbt.domain.models.ForecastWeather
 import com.vickbt.domain.models.ForecastDay
+import com.vickbt.domain.models.ForecastWeather
+import com.vickbt.domain.models.HistoryForecast
 import com.vickbt.domain.models.HourForecast
 import com.vickbt.domain.models.Location
 import com.vickbt.network.dtos.ConditionDto
@@ -14,6 +15,7 @@ import com.vickbt.network.dtos.CurrentWeatherDto
 import com.vickbt.network.dtos.DayForecastDto
 import com.vickbt.network.dtos.ForecastDayDto
 import com.vickbt.network.dtos.ForecastWeatherDto
+import com.vickbt.network.dtos.HistoryForecastDto
 import com.vickbt.network.dtos.HourForecastDto
 import com.vickbt.network.dtos.LocationDto
 import kotlinx.datetime.Instant
@@ -120,5 +122,12 @@ fun HourForecastDto.toDomain(): HourForecast {
         willItSnow = this.willItSnow,
         windKph = this.windKph,
         windMph = this.windMph
+    )
+}
+
+fun HistoryForecastDto.toDomain(): HistoryForecast {
+    return HistoryForecast(
+        forecast = this.forecast.forecastday.map { it.toDomain() },
+        location = this.location.toDomain()
     )
 }
