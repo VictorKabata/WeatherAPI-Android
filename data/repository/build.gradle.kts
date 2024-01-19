@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(project(":data:network"))
-    implementation(project(":data:cache"))
+    api(project(":domain"))
+    api(project(":data:network"))
+    api(project(":data:cache"))
 }
