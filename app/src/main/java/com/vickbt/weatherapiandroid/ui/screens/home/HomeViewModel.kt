@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val weatherRepository: WeatherRepositoryImpl) :
+class HomeViewModel constructor(private val weatherRepository: WeatherRepositoryImpl) :
     ViewModel() {
 
     private val _homeUiState = MutableStateFlow(HomeUiStates(isLoading = true))
