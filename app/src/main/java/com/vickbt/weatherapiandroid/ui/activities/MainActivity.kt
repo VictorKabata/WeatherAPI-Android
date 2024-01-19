@@ -1,4 +1,4 @@
-package com.vickbt.weatherapiandroid
+package com.vickbt.weatherapiandroid.ui.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
