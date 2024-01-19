@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel constructor(private val weatherRepository: WeatherRepositoryImpl) :
+class HomeViewModel(private val weatherRepository: WeatherRepositoryImpl) :
     ViewModel() {
 
     private val _homeUiState = MutableStateFlow(HomeUiStates(isLoading = true))
@@ -22,12 +22,13 @@ class HomeViewModel constructor(private val weatherRepository: WeatherRepository
     }
 
     init {
-        fetchCurrentWeather(query = "Nairobi")
+        fetchCurrentWeather(query = "Thika")
     }
 
     fun fetchCurrentWeather(query: String) = viewModelScope.launch(coroutineExceptionHandler) {
-        weatherRepository.fetchCurrentWeather(query = query).collect {
-            Napier.e(tag = "VicKbt", message = "Result: $it")
+        weatherRepository.fetchCurrentWeather(query = query).collect { result ->
+            _homeUiState.update { it.copy(isLoading = false, currentWeather = result) }
+            Napier.e(tag = "VicKbt", message = "Result: $result")
         }
     }
 
