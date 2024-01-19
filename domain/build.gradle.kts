@@ -5,11 +5,13 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
     api(libs.coroutines.core)
     api(libs.koin.core)
+    api(libs.napier)
+    api(libs.kotlinX.dateTime)
 }

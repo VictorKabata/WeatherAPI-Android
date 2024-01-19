@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">WeatherAPI Android</string>
+    <string name="title_home">Home</string>
+    <string name="title_settings">Settings</string>
+
+    <string name="humidity">Humidity</string>
+    <string name="feels_like">Feels like</string>
+    <string name="wind">Wind</string>
+    <string name="uv_index">UV Index</string>
 </resources>
