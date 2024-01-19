@@ -1,6 +1,7 @@
 package com.vickbt.repository.datasource
 
 import com.vickbt.domain.models.CurrentWeather
+import com.vickbt.domain.models.ForecastWeather
 import com.vickbt.network.WeatherApiService
 import com.vickbt.network.utils.safeApiCall
 import com.vickbt.repository.mappers.toDomain
@@ -14,6 +15,15 @@ class WeatherRepositoryImpl(private val weatherApiService: WeatherApiService) {
     ): Flow<Result<CurrentWeather>> {
         return safeApiCall {
             weatherApiService.fetchCurrentWeather(query = query, language = language).toDomain()
+        }
+    }
+
+    suspend fun fetchForecastWeather(
+        query: String,
+        language: String = "en"
+    ): Flow<Result<ForecastWeather>> {
+        return safeApiCall {
+            weatherApiService.fetchForecastWeather(query = query, language = language).toDomain()
         }
     }
 }
