@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -32,6 +35,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.vickbt.domain.utils.toReadableFormat
 import com.vickbt.weatherapiandroid.R
+import com.vickbt.weatherapiandroid.ui.components.DayCondition
 import com.vickbt.weatherapiandroid.ui.components.ExtraCondition
 import io.github.aakira.napier.Napier
 import org.koin.compose.koinInject
@@ -46,7 +50,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
     ) {
         if (homeUiState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        } else if (homeUiState.currentWeather != null) {
+        } else if (homeUiState.forecastWeather != null) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -64,8 +68,8 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
                     )
                 ) {
                     Text(
-                        text = "${homeUiState.currentWeather.location.name}," +
-                                " ${homeUiState.currentWeather.location.country}",
+                        text = "${homeUiState.forecastWeather.location.name}," +
+                                " ${homeUiState.forecastWeather.location.country}",
                         fontWeight = FontWeight.Black,
                         fontSize = 24.sp,
                         maxLines = 1,
@@ -73,7 +77,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
                     )
 
                     Text(
-                        text = homeUiState.currentWeather.location.localtime.toReadableFormat(),
+                        text = homeUiState.forecastWeather.location.localtime.toReadableFormat(),
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 20.sp,
                         maxLines = 1,
@@ -90,19 +94,19 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
                     Image(
                         modifier = Modifier.size(120.dp),
                         painter = rememberImagePainter(R.drawable.weather_placeholder),
-                        contentDescription = homeUiState.currentWeather.current.condition.text,
+                        contentDescription = homeUiState.forecastWeather.current.condition.text,
                         contentScale = ContentScale.Crop
                     )
 
                     Text(
-                        text = homeUiState.currentWeather.current.tempC.toInt().toString(),
+                        text = homeUiState.forecastWeather.current.tempC.toInt().toString(),
                         fontSize = 80.sp,
                         fontWeight = FontWeight.ExtraBold,
                         maxLines = 1
                     )
 
                     Text(
-                        text = homeUiState.currentWeather.current.condition.text,
+                        text = homeUiState.forecastWeather.current.condition.text,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.SemiBold,
                         maxLines = 1
@@ -123,28 +127,49 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
                         ExtraCondition(
                             icon = R.drawable.weather_placeholder,
                             title = R.string.humidity,
-                            value = "${homeUiState.currentWeather.current.humidity}%"
+                            value = "${homeUiState.forecastWeather.current.humidity}%"
                         )
                     }
                     item {
                         ExtraCondition(
                             icon = R.drawable.weather_placeholder,
                             title = R.string.feels_like,
-                            value = "${homeUiState.currentWeather.current.tempC}"
+                            value = "${homeUiState.forecastWeather.current.tempC}"
                         )
                     }
                     item {
                         ExtraCondition(
                             icon = R.drawable.weather_placeholder,
                             title = R.string.wind,
-                            value = "${homeUiState.currentWeather.current.windKph}km/h"
+                            value = "${homeUiState.forecastWeather.current.windKph}km/h"
                         )
                     }
                     item {
                         ExtraCondition(
                             icon = R.drawable.weather_placeholder,
                             title = R.string.uv_index,
-                            value = "${homeUiState.currentWeather.current.uv}"
+                            value = "${homeUiState.forecastWeather.current.uv}"
+                        )
+                    }
+                }
+                //endregion
+
+                Divider(modifier = Modifier.padding(horizontal = 4.dp), thickness = 1.dp)
+
+                //region Weekly Forecast
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    items(items = homeUiState.forecastWeather.forecast) {
+                        DayCondition(
+                            modifier = Modifier
+                                .width(70.dp)
+                                .height(90.dp),
+                            icon = R.drawable.weather_placeholder,
+                            dayOfWeek = it.dateEpoch.dayOfWeek.toString().uppercase(),
+                            minTemp = it.day.mintempC.toInt().toString(),
+                            maxTemp = it.day.maxtempC.toInt().toString()
                         )
                     }
                 }

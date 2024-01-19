@@ -5,9 +5,10 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -24,9 +25,16 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 
 @Composable
-fun ExtraCondition(@DrawableRes icon: Int, @StringRes title: Int, value: String) {
+fun ExtraCondition(
+    modifier: Modifier = Modifier,
+    @DrawableRes icon: Int,
+    @StringRes title: Int,
+    value: String
+) {
     Card(
-        modifier = Modifier.wrapContentSize(),
+        modifier = modifier
+            .width(80.dp)
+            .height(100.dp),
         shape = RoundedCornerShape(4.dp)
     ) {
         Column(
@@ -44,7 +52,7 @@ fun ExtraCondition(@DrawableRes icon: Int, @StringRes title: Int, value: String)
             Text(
                 text = stringResource(id = title).uppercase(),
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 12.sp,
+                fontSize = 10.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center
@@ -52,7 +60,7 @@ fun ExtraCondition(@DrawableRes icon: Int, @StringRes title: Int, value: String)
 
             Text(
                 text = value.lowercase(),
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
