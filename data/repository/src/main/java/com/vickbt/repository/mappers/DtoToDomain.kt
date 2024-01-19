@@ -12,8 +12,8 @@ import com.vickbt.network.dtos.ConditionDto
 import com.vickbt.network.dtos.CurrentDto
 import com.vickbt.network.dtos.CurrentWeatherDto
 import com.vickbt.network.dtos.DayForecastDto
-import com.vickbt.network.dtos.ForecastWeatherDto
 import com.vickbt.network.dtos.ForecastDayDto
+import com.vickbt.network.dtos.ForecastWeatherDto
 import com.vickbt.network.dtos.HourForecastDto
 import com.vickbt.network.dtos.LocationDto
 import kotlinx.datetime.Instant
@@ -69,7 +69,8 @@ fun ForecastWeatherDto.toDomain(): ForecastWeather {
 
 fun ForecastDayDto.toDomain(): Forecastday {
     return Forecastday(
-        dateEpoch = this.dateEpoch,
+        dateEpoch = Instant.fromEpochSeconds(this.dateEpoch.toLong())
+            .toLocalDateTime(TimeZone.currentSystemDefault()),
         day = this.day.toDomain(),
         hour = this.hour.map { it.toDomain() }
     )
@@ -112,7 +113,8 @@ fun HourForecastDto.toDomain(): HourForecast {
         snowCm = this.snowCm,
         tempC = this.tempC,
         tempF = this.tempF,
-        timeEpoch = this.timeEpoch,
+        timeEpoch = Instant.fromEpochSeconds(this.timeEpoch.toLong())
+            .toLocalDateTime(TimeZone.currentSystemDefault()),
         uv = this.uv,
         willItRain = this.willItRain,
         willItSnow = this.willItSnow,
