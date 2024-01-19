@@ -6,7 +6,7 @@ data class DayForecast(
     val avgtempC: Double,
     val avgtempF: Double,
     val avgvisKm: Double,
-    val avgvisMiles: Int,
+    val avgvisMiles: Double,
     val condition: Condition,
     val dailyChanceOfRain: Int,
     val dailyChanceOfSnow: Int,
@@ -20,6 +20,6 @@ data class DayForecast(
     val mintempF: Double,
     val totalprecipIn: Double,
     val totalprecipMm: Double,
-    val totalsnowCm: Int,
-    val uv: Int
+    val totalsnowCm: Double,
+    val uv: Double
 )

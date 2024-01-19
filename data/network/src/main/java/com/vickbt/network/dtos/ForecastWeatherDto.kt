@@ -6,12 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ForecastWeatherDto(
-    @SerialName("current")
-    val current: CurrentDto,
-
-    @SerialName("forecast")
-    val forecast: ForecastItemsDto,
-
-    @SerialName("location")
-    val location: LocationDto
+    @SerialName("current") val current: CurrentDto,
+    @SerialName("forecast") val forecast: ForecastDto,
+    @SerialName("location") val location: LocationDto
 )

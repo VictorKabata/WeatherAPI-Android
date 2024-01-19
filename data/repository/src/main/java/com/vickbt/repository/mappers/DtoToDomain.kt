@@ -13,7 +13,7 @@ import com.vickbt.network.dtos.CurrentDto
 import com.vickbt.network.dtos.CurrentWeatherDto
 import com.vickbt.network.dtos.DayForecastDto
 import com.vickbt.network.dtos.ForecastWeatherDto
-import com.vickbt.network.dtos.ForecastdayDto
+import com.vickbt.network.dtos.ForecastDayDto
 import com.vickbt.network.dtos.HourForecastDto
 import com.vickbt.network.dtos.LocationDto
 import kotlinx.datetime.Instant
@@ -67,7 +67,7 @@ fun ForecastWeatherDto.toDomain(): ForecastWeather {
     )
 }
 
-fun ForecastdayDto.toDomain(): Forecastday {
+fun ForecastDayDto.toDomain(): Forecastday {
     return Forecastday(
         dateEpoch = this.dateEpoch,
         day = this.day.toDomain(),

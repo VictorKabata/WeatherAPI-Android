@@ -26,6 +26,7 @@ class WeatherApiService(private val weatherApiClient: HttpClient) {
         return weatherApiClient.get("forecast.json") {
             parameter("q", query)
             parameter("lang", language)
+            parameter("days", 7)
         }.body<ForecastWeatherDto>()
     }
 }

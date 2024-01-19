@@ -22,14 +22,27 @@ class HomeViewModel(private val weatherRepository: WeatherRepositoryImpl) :
     }
 
     init {
-        fetchCurrentWeather("Nairobi")
+        fetchForecastWeather("Nairobi")
     }
 
-    fun fetchCurrentWeather(query: String) = viewModelScope.launch(coroutineExceptionHandler) {
+    /*fun fetchCurrentWeather(query: String) = viewModelScope.launch(coroutineExceptionHandler) {
         weatherRepository.fetchCurrentWeather(query = query).collect { result ->
             result.onSuccess { currentWeather ->
                 Napier.e(tag = "VicKbt", message = "Success: $currentWeather")
                 _homeUiState.update { it.copy(isLoading = false, currentWeather = currentWeather) }
+            }.onFailure {
+                Napier.e(tag = "VicKbt", message = "Error: $it")
+                _homeUiState.update { it.copy(isLoading = false, error = it.error) }
+            }
+        }
+    }*/
+
+    fun fetchForecastWeather(query: String) = viewModelScope.launch(coroutineExceptionHandler) {
+        weatherRepository.fetchForecastWeather(query = query).collect { result ->
+            result.onSuccess { forecastWeather ->
+                _homeUiState.update {
+                    it.copy(isLoading = false, forecastWeather = forecastWeather)
+                }
             }.onFailure {
                 Napier.e(tag = "VicKbt", message = "Error: $it")
                 _homeUiState.update { it.copy(isLoading = false, error = it.error) }

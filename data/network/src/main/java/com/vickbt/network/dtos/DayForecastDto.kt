@@ -19,7 +19,7 @@ data class DayForecastDto(
     val avgvisKm: Double,
 
     @SerialName("avgvis_miles")
-    val avgvisMiles: Int,
+    val avgvisMiles: Double,
 
     @SerialName("condition")
     val condition: ConditionDto,
@@ -61,8 +61,8 @@ data class DayForecastDto(
     val totalprecipMm: Double,
 
     @SerialName("totalsnow_cm")
-    val totalsnowCm: Int,
+    val totalsnowCm: Double,
 
     @SerialName("uv")
-    val uv: Int
+    val uv: Double
 )
