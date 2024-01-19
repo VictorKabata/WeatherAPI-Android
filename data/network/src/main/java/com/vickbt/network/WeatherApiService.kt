@@ -17,5 +17,4 @@ class WeatherApiService(private val weatherApiClient: HttpClient) {
             parameter("lang", language)
         }.body<CurrentWeatherDto>()
     }
-
 }

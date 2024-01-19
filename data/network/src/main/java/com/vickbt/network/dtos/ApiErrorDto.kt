@@ -11,4 +11,3 @@ data class ApiErrorDto(
     @SerialName("message")
     val message: String
 )
-

@@ -16,5 +16,4 @@ class WeatherRepositoryImpl(private val weatherApiService: WeatherApiService) {
             weatherApiService.fetchCurrentWeather(query = query, language = language).toDomain()
         }
     }
-
 }

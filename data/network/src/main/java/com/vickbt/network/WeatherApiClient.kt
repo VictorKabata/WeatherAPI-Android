@@ -56,8 +56,4 @@ internal object WeatherApiClient {
             )
         }
     }
-
 }
-
-
-

@@ -21,5 +21,4 @@ class WeatherApiAndroidApplication : Application() {
             modules(modules)
         }
     }
-
 }

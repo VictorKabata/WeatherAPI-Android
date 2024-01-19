@@ -39,7 +39,6 @@ import org.koin.compose.koinInject
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInject()) {
-
     val homeUiState = viewModel.homeUiState.collectAsState().value
 
     Box(
@@ -170,5 +169,5 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
 @Preview
 @Composable
 fun Preview() {
-
+    HomeScreen(navController = NavController(LocalContext.current))
 }

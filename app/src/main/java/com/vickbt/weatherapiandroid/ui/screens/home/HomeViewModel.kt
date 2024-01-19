@@ -36,5 +36,4 @@ class HomeViewModel(private val weatherRepository: WeatherRepositoryImpl) :
             }
         }
     }
-
 }
