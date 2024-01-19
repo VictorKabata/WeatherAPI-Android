@@ -2,7 +2,6 @@ package com.vickbt.domain.models
 
 import kotlinx.datetime.LocalDateTime
 
-
 data class HourForecast(
     val chanceOfRain: Int,
     val chanceOfSnow: Int,

@@ -38,7 +38,6 @@ fun DayCondition(
             verticalArrangement = Arrangement.spacedBy(1.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(
                 text = dayOfWeek.uppercase(),
                 fontWeight = FontWeight.SemiBold,
@@ -80,7 +79,6 @@ fun DayCondition(
                     textAlign = TextAlign.Center
                 )
             }
-
         }
     }
 }

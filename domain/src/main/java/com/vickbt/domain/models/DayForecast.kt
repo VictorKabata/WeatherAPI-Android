@@ -1,6 +1,5 @@
 package com.vickbt.domain.models
 
-
 data class DayForecast(
     val avghumidity: Int,
     val avgtempC: Double,
