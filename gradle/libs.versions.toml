@@ -3,10 +3,11 @@ agp = "8.2.1"
 kotlin = "1.9.0"
 ktLint = "11.6.0"
 detekt = "1.19.0"
+
 core-ktx = "1.12.0"
-junit = "4.13.2"
-androidx-test-ext-junit = "1.1.5"
-espresso-core = "3.5.1"
+org-jetbrains-kotlin-jvm = "1.9.0"
+appcompat = "1.6.1"
+material = "1.11.0"
 lifecycle-runtime-ktx = "2.7.0"
 activity-compose = "1.8.2"
 compose-bom = "2023.08.00"
@@ -20,18 +21,19 @@ kotlinxSerializationJson = "1.6.2"
 kotlinxDateTime = "0.5.0"
 sqlDelight = "2.0.1"
 leakCanary = "2.12"
+napier = "2.6.1"
 
 truth = "1.1.3"
-org-jetbrains-kotlin-jvm = "1.9.0"
-appcompat = "1.6.1"
-material = "1.11.0"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ktLint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-kotlinX-serialization-plugin = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlinX-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 
@@ -60,6 +62,7 @@ sqlDelight = { module = "app.cash.sqldelight:runtime", version.ref = "sqlDelight
 sqlDelight-coroutine = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
 sqlDelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
 kotlinX-dateTime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDateTime" }
+napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 
 # Test libs
 junit = { group = "junit", name = "junit", version.ref = "junit" }
