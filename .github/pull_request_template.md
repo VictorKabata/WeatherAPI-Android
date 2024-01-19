@@ -16,7 +16,7 @@
 - [ ] I have written unit tests for the new code ___(if applicable)___.
 - [ ] I have updated the project's documentation ___(if necessary)___.
 - [ ] I have checked for any potential code duplications and removed them.
-- [ ] I have run the Kotlin/Compose Multiplatform Gradle tasks and verified that they completed successfully.
+- [ ] I have run the linting tasks and verified that they completed successfully.
 - [ ] I have considered the impact of these changes on the existing codebase.
 
 ## Additional Notes
