@@ -5,7 +5,7 @@ import com.vickbt.domain.models.Current
 import com.vickbt.domain.models.CurrentWeather
 import com.vickbt.domain.models.DayForecast
 import com.vickbt.domain.models.ForecastWeather
-import com.vickbt.domain.models.Forecastday
+import com.vickbt.domain.models.ForecastDay
 import com.vickbt.domain.models.HourForecast
 import com.vickbt.domain.models.Location
 import com.vickbt.network.dtos.ConditionDto
@@ -67,8 +67,8 @@ fun ForecastWeatherDto.toDomain(): ForecastWeather {
     )
 }
 
-fun ForecastDayDto.toDomain(): Forecastday {
-    return Forecastday(
+fun ForecastDayDto.toDomain(): ForecastDay {
+    return ForecastDay(
         dateEpoch = Instant.fromEpochSeconds(this.dateEpoch.toLong())
             .toLocalDateTime(TimeZone.currentSystemDefault()),
         day = this.day.toDomain(),
