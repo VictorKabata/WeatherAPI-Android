@@ -16,7 +16,7 @@ import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-object WeatherApiClient {
+internal object WeatherApiClient {
 
     fun createWeatherApiClient(enableNetworkLogs: Boolean = false) = HttpClient {
         expectSuccess = true
