@@ -62,7 +62,6 @@ dependencies {
     implementation(libs.material3)
 
     implementation(libs.lifecycle.runtime)
-    // implementation(libs.livedata.compose)
 
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
@@ -71,6 +70,8 @@ dependencies {
     implementation(libs.ui.tooling.preview)
 
     implementation(libs.navigation.compose)
+
+    implementation(libs.coil)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

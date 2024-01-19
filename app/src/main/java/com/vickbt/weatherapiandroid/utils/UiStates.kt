@@ -1,9 +1,9 @@
 package com.vickbt.weatherapiandroid.utils
 
-import com.vickbt.network.dtos.CurrentWeatherDto
+import com.vickbt.domain.models.CurrentWeather
 
 data class HomeUiStates(
     val isLoading: Boolean = true,
     val error: String? = null,
-    val currentWeather: CurrentWeatherDto? = null
+    val currentWeather: CurrentWeather? = null
 )

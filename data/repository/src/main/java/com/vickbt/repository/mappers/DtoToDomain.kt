@@ -8,6 +8,9 @@ import com.vickbt.network.dtos.ConditionDto
 import com.vickbt.network.dtos.CurrentDto
 import com.vickbt.network.dtos.CurrentWeatherDto
 import com.vickbt.network.dtos.LocationDto
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 fun CurrentWeatherDto.toDomain(): CurrentWeather {
     return CurrentWeather(current = this.current.toDomain(), location = this.location.toDomain())
@@ -38,7 +41,8 @@ fun LocationDto.toDomain(): Location {
         country = this.country,
         lat = this.lat,
         lon = this.lon,
-        localtime = this.localtime,
+        localtime = Instant.fromEpochSeconds(this.localtimeEpoch.toLong())
+            .toLocalDateTime(TimeZone.currentSystemDefault()),
         name = this.name
     )
 }

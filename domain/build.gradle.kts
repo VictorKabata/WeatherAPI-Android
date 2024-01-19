@@ -13,4 +13,5 @@ dependencies {
     api(libs.coroutines.core)
     api(libs.koin.core)
     api(libs.napier)
+    api(libs.kotlinX.dateTime)
 }
