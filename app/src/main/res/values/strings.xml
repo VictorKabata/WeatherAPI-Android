@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherAPI Android</string>
+    <string name="title_home">Home</string>
+    <string name="title_settings">Settings</string>
 </resources>

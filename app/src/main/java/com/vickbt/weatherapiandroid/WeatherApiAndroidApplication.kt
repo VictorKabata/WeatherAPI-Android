@@ -1,4 +1,4 @@
-package com.vickbt.weatherapiandroid.ui
+package com.vickbt.weatherapiandroid
 
 import android.app.Application
 import com.vickbt.network.di.networkModule
