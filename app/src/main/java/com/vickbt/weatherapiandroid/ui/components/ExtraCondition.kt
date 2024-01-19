@@ -3,6 +3,7 @@ package com.vickbt.weatherapiandroid.ui.components
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,7 +31,8 @@ fun ExtraCondition(@DrawableRes icon: Int, @StringRes title: Int, value: String)
     ) {
         Column(
             modifier = Modifier.padding(vertical = 16.dp, horizontal = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(1.dp)
         ) {
             Image(
                 modifier = Modifier.size(32.dp),
