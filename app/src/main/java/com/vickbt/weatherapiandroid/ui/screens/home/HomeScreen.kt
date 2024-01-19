@@ -116,8 +116,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(vertical = 8.dp),
+                        .wrapContentHeight(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     item {
