@@ -12,7 +12,7 @@ class WeatherApiService(private val weatherApiClient: HttpClient) {
 
     suspend fun fetchCurrentWeather(
         query: String,
-        language: String? = "en"
+        language: String
     ): Flow<CurrentWeatherDto> {
         return flowOf(
             weatherApiClient.get("current.json") {
