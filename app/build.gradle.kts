@@ -62,7 +62,7 @@ dependencies {
     implementation(libs.material3)
 
     implementation(libs.lifecycle.runtime)
-    implementation(libs.livedata.compose)
+    // implementation(libs.livedata.compose)
 
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
