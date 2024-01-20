@@ -23,9 +23,6 @@ data class HourForecastDto(
     @SerialName("dewpoint_f")
     val dewpointF: Double,
 
-    @SerialName("diff_rad")
-    val diffRad: Double,
-
     @SerialName("feelslike_c")
     val feelslikeC: Double,
 
@@ -61,9 +58,6 @@ data class HourForecastDto(
 
     @SerialName("pressure_mb")
     val pressureMb: Double,
-
-    @SerialName("short_rad")
-    val shortRad: Double,
 
     @SerialName("snow_cm")
     val snowCm: Double,

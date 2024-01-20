@@ -7,15 +7,9 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
-import kotlin.time.Duration.Companion.days
 
 class WeatherApiService(private val weatherApiClient: HttpClient) {
-
-    private val timeZone = TimeZone.currentSystemDefault()
 
     suspend fun fetchCurrentWeather(
         query: String,
@@ -41,14 +35,14 @@ class WeatherApiService(private val weatherApiClient: HttpClient) {
     suspend fun fetchHistoryWeather(
         query: String,
         language: String,
-        startDate: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone),
-        endDate: LocalDateTime = Clock.System.now().minus(14.days).toLocalDateTime(timeZone)
+        startDate: LocalDateTime,
+        endDate: LocalDateTime
     ): HistoryForecastDto {
         return weatherApiClient.get("history.json") {
             parameter("q", query)
             parameter("lang", language)
-            parameter("dt", "${startDate.year}-${startDate.month}-${startDate.date}")
-            parameter("end_dt", "${endDate.year}-${endDate.month}-${endDate.date}")
+            parameter("dt", "${startDate.date}")
+            parameter("end_dt", "${endDate.date}")
         }.body<HistoryForecastDto>()
     }
 }
