@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.vickbt.domain.utils.toReadableFormat
+import com.vickbt.shared.domain.utils.toReadableFormat
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.DayCondition
 import com.vickbt.weatherapiandroid.ui.components.ExtraCondition

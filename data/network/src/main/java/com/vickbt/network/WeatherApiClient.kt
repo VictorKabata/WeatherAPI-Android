@@ -1,7 +1,7 @@
 package com.vickbt.network
 
-import com.vickbt.domain.utils.Constants.BASE_URL
-import com.vickbt.domain.utils.Constants.URL_PATH
+import com.vickbt.shared.domain.utils.Constants.BASE_URL
+import com.vickbt.shared.domain.utils.Constants.URL_PATH
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient

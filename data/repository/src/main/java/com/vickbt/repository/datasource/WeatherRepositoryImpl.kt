@@ -1,7 +1,5 @@
 package com.vickbt.repository.datasource
 
-import com.vickbt.domain.models.ForecastWeather
-import com.vickbt.domain.models.HistoryForecast
 import com.vickbt.network.WeatherApiService
 import com.vickbt.network.utils.safeApiCall
 import com.vickbt.repository.mappers.toDomain
@@ -24,7 +22,7 @@ class WeatherRepositoryImpl(
     suspend fun fetchForecastWeather(
         query: String? = null,
         language: String = "en"
-    ): Flow<Result<ForecastWeather>> {
+    ): Flow<Result<com.vickbt.shared.domain.models.ForecastWeather>> {
         val location = locationService.requestLocationUpdates().first()
 
         return safeApiCall {
@@ -40,7 +38,7 @@ class WeatherRepositoryImpl(
         language: String = "en",
         startDate: LocalDateTime = Clock.System.now().minus(14.days).toLocalDateTime(timeZone),
         endDate: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)
-    ): Flow<Result<HistoryForecast>> {
+    ): Flow<Result<com.vickbt.shared.domain.models.HistoryForecast>> {
         return safeApiCall {
             val location = locationService.requestLocationUpdates().first()
 

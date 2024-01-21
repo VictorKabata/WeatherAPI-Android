@@ -1,6 +1,6 @@
 package com.vickbt.network.utils
 
-import com.vickbt.domain.models.ApiError
+import com.vickbt.shared.domain.models.ApiError
 import com.vickbt.network.dtos.ApiErrorDto
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
@@ -36,7 +36,7 @@ internal suspend fun parseNetworkError(
 ): Exception {
     val error = errorResponse?.body<ApiErrorDto>()
 
-    throw ApiError(
+    throw com.vickbt.shared.domain.models.ApiError(
         code = error?.code ?: 0,
         error = error?.message ?: exception?.message ?: "Unknown error occurred"
     )

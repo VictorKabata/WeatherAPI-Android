@@ -34,9 +34,8 @@ android {
 }
 
 dependencies {
-    api(project(":domain"))
+    api(project(":shared"))
     api(project(":data:network"))
-    api(project(":data:cache"))
 
     implementation(libs.play.services.location)
     implementation(libs.play.services.maps)

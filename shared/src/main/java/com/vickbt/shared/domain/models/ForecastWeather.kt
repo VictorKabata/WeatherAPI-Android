@@ -1,4 +1,4 @@
-package com.vickbt.domain.models
+package com.vickbt.shared.domain.models
 
 data class ForecastWeather(
     val current: Current,

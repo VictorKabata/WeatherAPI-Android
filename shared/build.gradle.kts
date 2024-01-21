@@ -25,7 +25,18 @@ kotlin {
 
     sourceSets {
         sourceSets["commonMain"].dependencies {
+            api(libs.ktor.core)
+            api(libs.ktor.cio)
+            api(libs.ktor.contentNegotiation)
+            api(libs.ktor.serialization)
+            api(libs.ktor.json)
+            api(libs.ktor.logging)
 
+            api(libs.coroutines.core)
+            api(libs.koin.core)
+            api(libs.napier)
+            api(libs.kotlinX.dateTime)
+            api(libs.multiplatformSettings)
         }
 
         sourceSets["commonTest"].dependencies {

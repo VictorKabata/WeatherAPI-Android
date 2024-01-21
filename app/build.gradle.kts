@@ -53,6 +53,7 @@ android {
 dependencies {
 
     implementation(project(":data:repository"))
+    implementation(project(":shared"))
 
     // Koin-Dependency injection
     implementation(libs.koin.android)
