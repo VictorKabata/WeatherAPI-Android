@@ -34,7 +34,6 @@ android {
 
 dependencies {
     api(project(":shared"))
-    api(project(":data:network"))
 
     implementation(libs.play.services.location)
     implementation(libs.play.services.maps)

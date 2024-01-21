@@ -15,6 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "WeatherAPI Android"
 include(":app")
-include(":data:network")
 include(":data:repository")
 include(":shared")

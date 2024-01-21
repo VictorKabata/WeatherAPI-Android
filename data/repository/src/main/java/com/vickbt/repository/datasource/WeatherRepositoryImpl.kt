@@ -1,7 +1,7 @@
 package com.vickbt.repository.datasource
 
-import com.vickbt.network.WeatherApiService
-import com.vickbt.network.utils.safeApiCall
+import com.vickbt.shared.network.WeatherApiService
+import com.vickbt.shared.network.utils.safeApiCall
 import com.vickbt.repository.mappers.toDomain
 import com.vickbt.repository.utils.LocationService
 import kotlinx.coroutines.flow.Flow

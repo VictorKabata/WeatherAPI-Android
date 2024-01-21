@@ -1,7 +1,7 @@
-package com.vickbt.network
+package com.vickbt.shared.network
 
-import com.vickbt.network.dtos.ForecastWeatherDto
-import com.vickbt.network.dtos.HistoryForecastDto
+import com.vickbt.shared.network.models.ForecastWeatherDto
+import com.vickbt.shared.network.models.HistoryForecastDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
