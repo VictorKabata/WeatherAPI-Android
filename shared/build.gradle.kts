@@ -1,11 +1,14 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+
 
 plugins {
     alias(libs.plugins.multiplatform)
     // alias(libs.plugins.nativeCocoapod)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlinX.serialization)
-    // alias(libs.plugins.buildKonfig)
+    alias(libs.plugins.buildKonfig)
     // alias(libs.plugins.compose)
 }
 
@@ -70,4 +73,16 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+}
+
+buildkonfig {
+    packageName = "com.vickbt.shared"
+
+    defaultConfigs {
+        buildConfigField(
+            STRING,
+            "API_KEY",
+            gradleLocalProperties(rootDir).getProperty("api_key") ?: ""
+        )
+    }
 }

@@ -1,5 +1,6 @@
 package com.vickbt.shared.network
 
+import com.vickbt.shared.BuildKonfig
 import com.vickbt.shared.domain.utils.Constants.BASE_URL
 import com.vickbt.shared.domain.utils.Constants.URL_PATH
 import io.github.aakira.napier.DebugAntilog
@@ -29,8 +30,8 @@ internal object WeatherApiClient {
                 path(URL_PATH)
                 parameters.append(
                     "key",
-                    "a21d17974a2c4f7c804125739241801"
-                ) // ToDo: Store api key in local.properties
+                    BuildKonfig.API_KEY
+                )
             }
         }
 
