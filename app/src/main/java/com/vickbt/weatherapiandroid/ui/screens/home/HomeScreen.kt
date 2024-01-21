@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,7 +43,11 @@ import org.koin.compose.koinInject
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInject()) {
+fun HomeScreen(
+    navController: NavController,
+    paddingValues: PaddingValues,
+    viewModel: HomeViewModel = koinInject()
+) {
     val homeUiState = viewModel.homeUiState.collectAsState().value
     val scrollState = rememberScrollState()
 
@@ -57,6 +62,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(paddingValues)
                     .align(Alignment.Center)
                     .verticalScroll(scrollState),
                 verticalArrangement = Arrangement.spacedBy(space = 12.dp)
@@ -222,5 +228,5 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
 @Preview
 @Composable
 fun Preview() {
-    HomeScreen(navController = NavController(LocalContext.current))
+
 }

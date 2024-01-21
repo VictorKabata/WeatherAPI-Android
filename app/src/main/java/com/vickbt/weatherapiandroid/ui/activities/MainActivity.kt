@@ -8,13 +8,22 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -29,14 +38,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.compose.rememberNavController
-import com.vickbt.weatherapiandroid.R
 import com.vickbt.repository.utils.areLocationPermissionsAlreadyGranted
 import com.vickbt.repository.utils.decideCurrentPermissionStatus
 import com.vickbt.repository.utils.openApplicationSettings
+import com.vickbt.weatherapiandroid.R
+import com.vickbt.weatherapiandroid.ui.components.NavigationDrawerContent
 import com.vickbt.weatherapiandroid.ui.navigation.Navigation
 import com.vickbt.weatherapiandroid.ui.theme.WeatherAPIAndroidTheme
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,62 +105,94 @@ class MainActivity : ComponentActivity() {
             DisposableEffect(
                 key1 = lifecycleOwner,
                 effect = {
-                val observer = LifecycleEventObserver { _, event ->
-                    if (event == Lifecycle.Event.ON_START &&
-                        !locationPermissionsGranted &&
-                        !shouldShowPermissionRationale
-                    ) {
-                        locationPermissionLauncher.launch(locationPermissions)
+                    val observer = LifecycleEventObserver { _, event ->
+                        if (event == Lifecycle.Event.ON_START &&
+                            !locationPermissionsGranted &&
+                            !shouldShowPermissionRationale
+                        ) {
+                            locationPermissionLauncher.launch(locationPermissions)
+                        }
+                    }
+                    lifecycleOwner.lifecycle.addObserver(observer)
+                    onDispose {
+                        lifecycleOwner.lifecycle.removeObserver(observer)
                     }
                 }
-                lifecycleOwner.lifecycle.addObserver(observer)
-                onDispose {
-                    lifecycleOwner.lifecycle.removeObserver(observer)
-                }
-            }
             )
 
             val scope = rememberCoroutineScope()
             val snackbarHostState = remember { SnackbarHostState() }
+            val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
             WeatherAPIAndroidTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Scaffold(
-                        modifier = Modifier.fillMaxSize(),
-                        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+                    ModalNavigationDrawer(
+                        drawerContent = {
+                            NavigationDrawerContent(
+                                modifier = Modifier,
+                                locationQuery = "",
+                                locationQueryChange = {},
+                                onLocationQueried = { /*TODO*/ },
+                                isThemeCheckedOn = false,
+                                onThemeCheckChanged = {},
+                                isImperialCheckedOn = false,
+                                onImperialCheckChanged = {}
+                            )
+                        },
+                        drawerState = drawerState
                     ) {
-                        if (shouldShowPermissionRationale) {
-                            LaunchedEffect(Unit) {
-                                scope.launch {
-                                    val userAction = snackbarHostState.showSnackbar(
-                                        message = getString(R.string.permission_request_message),
-                                        actionLabel = getString(R.string.request),
-                                        duration = SnackbarDuration.Indefinite,
-                                        withDismissAction = false
-                                    )
-                                    when (userAction) {
-                                        SnackbarResult.ActionPerformed -> {
-                                            shouldShowPermissionRationale = false
-                                            locationPermissionLauncher.launch(locationPermissions)
-                                        }
+                        Scaffold(
+                            modifier = Modifier.fillMaxSize(),
+                            topBar = {
+                                TopAppBar(title = {}, navigationIcon = {
+                                    IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.Menu,
+                                            contentDescription = getString(R.string.menu)
+                                        )
+                                    }
+                                })
+                            },
+                            snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+                        ) { paddingValues ->
+                            if (shouldShowPermissionRationale) {
+                                LaunchedEffect(Unit) {
+                                    scope.launch {
+                                        val userAction = snackbarHostState.showSnackbar(
+                                            message = getString(R.string.permission_request_message),
+                                            actionLabel = getString(R.string.request),
+                                            duration = SnackbarDuration.Indefinite,
+                                            withDismissAction = false
+                                        )
+                                        when (userAction) {
+                                            SnackbarResult.ActionPerformed -> {
+                                                shouldShowPermissionRationale = false
+                                                locationPermissionLauncher.launch(
+                                                    locationPermissions
+                                                )
+                                            }
 
-                                        SnackbarResult.Dismissed -> {
-                                            shouldShowPermissionRationale = false
+                                            SnackbarResult.Dismissed -> {
+                                                shouldShowPermissionRationale = false
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                        if (shouldDirectUserToApplicationSettings) {
-                            openApplicationSettings()
-                        }
+                            if (shouldDirectUserToApplicationSettings) {
+                                openApplicationSettings()
+                            }
 
-                        if (locationPermissionsGranted) {
-                            val navController = rememberNavController()
-                            Navigation(navController = navController)
+                            if (locationPermissionsGranted) {
+                                val navController = rememberNavController()
+                                Navigation(
+                                    navController = navController,
+                                    paddingValues = paddingValues
+                                )
+                            }
                         }
                     }
                 }
@@ -162,6 +205,5 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Preview() {
     WeatherAPIAndroidTheme {
-        Navigation(navController = rememberNavController())
     }
 }
