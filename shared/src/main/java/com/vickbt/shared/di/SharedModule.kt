@@ -2,10 +2,10 @@ package com.vickbt.shared.di
 
 import android.content.Context
 import com.google.android.gms.location.LocationServices
-import com.vickbt.shared.cache.MultiplatformSettingsWrapper
-import com.vickbt.shared.network.WeatherApiClient
-import com.vickbt.shared.network.WeatherApiService
-import com.vickbt.shared.repository.datasource.WeatherRepositoryImpl
+import com.vickbt.shared.data.cache.MultiplatformSettingsWrapper
+import com.vickbt.shared.data.network.WeatherApiClient
+import com.vickbt.shared.data.network.WeatherApiService
+import com.vickbt.shared.data.repository.datasource.WeatherRepositoryImpl
 import io.github.aakira.napier.BuildConfig
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf

@@ -1,4 +1,4 @@
-package com.vickbt.shared.repository.mappers
+package com.vickbt.shared.data.repository.mappers
 
 import com.vickbt.shared.domain.models.Condition
 import com.vickbt.shared.domain.models.Current
@@ -8,14 +8,14 @@ import com.vickbt.shared.domain.models.ForecastWeather
 import com.vickbt.shared.domain.models.HistoryForecast
 import com.vickbt.shared.domain.models.HourForecast
 import com.vickbt.shared.domain.models.Location
-import com.vickbt.shared.network.models.ConditionDto
-import com.vickbt.shared.network.models.CurrentDto
-import com.vickbt.shared.network.models.DayForecastDto
-import com.vickbt.shared.network.models.ForecastDayDto
-import com.vickbt.shared.network.models.ForecastWeatherDto
-import com.vickbt.shared.network.models.HistoryForecastDto
-import com.vickbt.shared.network.models.HourForecastDto
-import com.vickbt.shared.network.models.LocationDto
+import com.vickbt.shared.data.network.models.ConditionDto
+import com.vickbt.shared.data.network.models.CurrentDto
+import com.vickbt.shared.data.network.models.DayForecastDto
+import com.vickbt.shared.data.network.models.ForecastDayDto
+import com.vickbt.shared.data.network.models.ForecastWeatherDto
+import com.vickbt.shared.data.network.models.HistoryForecastDto
+import com.vickbt.shared.data.network.models.HourForecastDto
+import com.vickbt.shared.data.network.models.LocationDto
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime

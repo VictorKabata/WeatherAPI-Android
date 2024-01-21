@@ -1,4 +1,4 @@
-package com.vickbt.shared.cache
+package com.vickbt.shared.data.cache
 
 import android.content.Context
 import com.russhwolf.settings.ObservableSettings

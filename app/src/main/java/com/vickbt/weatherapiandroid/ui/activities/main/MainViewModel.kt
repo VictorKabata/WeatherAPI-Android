@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.vickbt.shared.domain.utils.Constants.MEASUREMENT_KEY
 import com.vickbt.shared.domain.utils.Constants.THEME_KEY
 import com.vickbt.shared.domain.utils.THEME_OPTIONS
-import com.vickbt.shared.repository.datasource.WeatherRepositoryImpl
+import com.vickbt.shared.data.repository.datasource.WeatherRepositoryImpl
 import com.vickbt.weatherapiandroid.utils.MainUiStates
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

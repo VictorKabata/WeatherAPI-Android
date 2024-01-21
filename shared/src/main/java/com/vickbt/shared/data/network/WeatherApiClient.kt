@@ -1,4 +1,4 @@
-package com.vickbt.shared.network
+package com.vickbt.shared.data.network
 
 import com.vickbt.shared.BuildKonfig
 import com.vickbt.shared.domain.utils.Constants.BASE_URL

@@ -1,4 +1,4 @@
-package com.vickbt.shared.repository.datasource
+package com.vickbt.shared.data.repository.datasource
 
 import com.russhwolf.settings.ExperimentalSettingsApi
 import com.russhwolf.settings.ObservableSettings
@@ -7,9 +7,9 @@ import com.vickbt.shared.domain.utils.Constants.MEASUREMENT_KEY
 import com.vickbt.shared.domain.utils.Constants.THEME_KEY
 import com.vickbt.shared.domain.utils.MEASUREMENT_OPTIONS
 import com.vickbt.shared.domain.utils.THEME_OPTIONS
-import com.vickbt.shared.network.WeatherApiService
-import com.vickbt.shared.network.utils.safeApiCall
-import com.vickbt.shared.repository.mappers.toDomain
+import com.vickbt.shared.data.network.WeatherApiService
+import com.vickbt.shared.data.network.utils.safeApiCall
+import com.vickbt.shared.data.repository.mappers.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Clock
