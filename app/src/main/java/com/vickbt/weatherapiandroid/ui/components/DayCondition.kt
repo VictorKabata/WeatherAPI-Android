@@ -29,6 +29,7 @@ fun DayCondition(
     modifier: Modifier,
     @DrawableRes icon: Int,
     dayOfWeek: String,
+    dateOfMonth: String? = null,
     minTemp: String,
     maxTemp: String
 ) {
@@ -46,6 +47,17 @@ fun DayCondition(
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center
             )
+
+            if (dateOfMonth != null) {
+                Text(
+                    text = dateOfMonth,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center
+                )
+            }
 
             Image(
                 modifier = Modifier.size(32.dp),

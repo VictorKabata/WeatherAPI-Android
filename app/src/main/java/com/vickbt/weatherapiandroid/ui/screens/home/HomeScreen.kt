@@ -13,9 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -37,16 +38,18 @@ import com.vickbt.domain.utils.toReadableFormat
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.DayCondition
 import com.vickbt.weatherapiandroid.ui.components.ExtraCondition
-import io.github.aakira.napier.Napier
 import org.koin.compose.koinInject
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInject()) {
     val homeUiState = viewModel.homeUiState.collectAsState().value
+    val scrollState = rememberScrollState()
 
     Box(
-        Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 12.dp, vertical = 8.dp)
     ) {
         if (homeUiState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -54,13 +57,15 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(space = 24.dp)
+                    .align(Alignment.Center)
+                    .verticalScroll(scrollState),
+                verticalArrangement = Arrangement.spacedBy(space = 12.dp)
             ) {
                 //region Location and Date Time
                 Column(
-                    modifier = Modifier.wrapContentSize(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(
                         space = 2.dp,
@@ -88,7 +93,9 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
 
                 //region Current Condition
                 Column(
-                    modifier = Modifier.wrapContentSize(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
@@ -157,6 +164,8 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
                 Divider(modifier = Modifier.padding(horizontal = 4.dp), thickness = 1.dp)
 
                 //region Weekly Forecast
+                Text(text = "This Week", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+
                 LazyRow(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -176,12 +185,32 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
                 //endregion
 
                 Divider(modifier = Modifier.padding(horizontal = 4.dp), thickness = 1.dp)
+
+                //region Historical Forecast
+                Text(text = "Past 2 Week", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    items(items = homeUiState.historyWeather?.forecast?.reversed() ?: emptyList()) {
+                        DayCondition(
+                            modifier = Modifier
+                                .width(70.dp)
+                                .height(120.dp),
+                            icon = R.drawable.weather_placeholder,
+                            dayOfWeek = it.dateEpoch.dayOfWeek.toString().uppercase(),
+                            dateOfMonth = it.dateEpoch.dayOfMonth.toString(),
+                            minTemp = it.day.mintempC.toInt().toString(),
+                            maxTemp = it.day.maxtempC.toInt().toString()
+                        )
+                    }
+                }
+                //endregion
             }
         } else if (homeUiState.error != null) {
             // ToDo: Display error
             val context = LocalContext.current
-
-            Napier.e(tag = "VicKbt", message = "${homeUiState.error}")
 
             LaunchedEffect(key1 = Unit) {
                 Toast.makeText(context, "Error: ${homeUiState.error}", Toast.LENGTH_LONG).show()

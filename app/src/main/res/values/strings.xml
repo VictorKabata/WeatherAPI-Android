@@ -7,4 +7,7 @@
     <string name="feels_like">Feels like</string>
     <string name="wind">Wind</string>
     <string name="uv_index">UV Index</string>
+
+    <string name="permission_request_message">Please authorize location permissions</string>
+    <string name="request">Request</string>
 </resources>
