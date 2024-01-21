@@ -38,7 +38,6 @@ import com.vickbt.domain.utils.toReadableFormat
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.DayCondition
 import com.vickbt.weatherapiandroid.ui.components.ExtraCondition
-import io.github.aakira.napier.Napier
 import org.koin.compose.koinInject
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -48,7 +47,9 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinInje
     val scrollState = rememberScrollState()
 
     Box(
-        Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 12.dp, vertical = 8.dp)
     ) {
         if (homeUiState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))

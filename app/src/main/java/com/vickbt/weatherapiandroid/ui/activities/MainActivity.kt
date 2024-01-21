@@ -2,12 +2,7 @@ package com.vickbt.weatherapiandroid.ui.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -31,11 +26,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.compose.rememberNavController
 import com.vickbt.weatherapiandroid.R
+import com.vickbt.repository.utils.areLocationPermissionsAlreadyGranted
+import com.vickbt.repository.utils.decideCurrentPermissionStatus
+import com.vickbt.repository.utils.openApplicationSettings
 import com.vickbt.weatherapiandroid.ui.navigation.Navigation
 import com.vickbt.weatherapiandroid.ui.theme.WeatherAPIAndroidTheme
 import kotlinx.coroutines.launch
@@ -120,7 +117,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
-                        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }) {
+                        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+                    ) {
 
                         if (shouldShowPermissionRationale) {
                             LaunchedEffect(Unit) {
@@ -157,31 +155,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-
-fun Context.areLocationPermissionsAlreadyGranted(): Boolean {
-    return ContextCompat.checkSelfPermission(
-        this,
-        Manifest.permission.ACCESS_FINE_LOCATION
-    ) == PackageManager.PERMISSION_GRANTED
-}
-
-fun Context.openApplicationSettings() {
-    Intent(
-        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-        Uri.fromParts("package", "com.vickbt.weatherapiandroid", null)
-    ).also {
-        startActivity(it)
-    }
-}
-
-private fun decideCurrentPermissionStatus(
-    locationPermissionsGranted: Boolean,
-    shouldShowPermissionRationale: Boolean
-): String {
-    return if (locationPermissionsGranted) "Granted"
-    else if (shouldShowPermissionRationale) "Rejected"
-    else "Denied"
 }
 
 
