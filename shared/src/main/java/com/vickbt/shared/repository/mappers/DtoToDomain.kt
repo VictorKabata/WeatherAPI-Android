@@ -1,5 +1,13 @@
-package com.vickbt.repository.mappers
+package com.vickbt.shared.repository.mappers
 
+import com.vickbt.shared.domain.models.Condition
+import com.vickbt.shared.domain.models.Current
+import com.vickbt.shared.domain.models.DayForecast
+import com.vickbt.shared.domain.models.ForecastDay
+import com.vickbt.shared.domain.models.ForecastWeather
+import com.vickbt.shared.domain.models.HistoryForecast
+import com.vickbt.shared.domain.models.HourForecast
+import com.vickbt.shared.domain.models.Location
 import com.vickbt.shared.network.models.ConditionDto
 import com.vickbt.shared.network.models.CurrentDto
 import com.vickbt.shared.network.models.DayForecastDto
@@ -12,8 +20,8 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-fun CurrentDto.toDomain(): com.vickbt.shared.domain.models.Current {
-    return com.vickbt.shared.domain.models.Current(
+fun CurrentDto.toDomain(): Current {
+    return Current(
         condition = this.condition.toDomain(),
         feelslikeC = this.feelslikeC,
         feelslikeF = this.feelslikeF,
@@ -32,8 +40,8 @@ fun CurrentDto.toDomain(): com.vickbt.shared.domain.models.Current {
     )
 }
 
-fun LocationDto.toDomain(): com.vickbt.shared.domain.models.Location {
-    return com.vickbt.shared.domain.models.Location(
+fun LocationDto.toDomain(): Location {
+    return Location(
         country = this.country,
         lat = this.lat,
         lon = this.lon,
@@ -43,20 +51,20 @@ fun LocationDto.toDomain(): com.vickbt.shared.domain.models.Location {
     )
 }
 
-fun ConditionDto.toDomain(): com.vickbt.shared.domain.models.Condition {
-    return com.vickbt.shared.domain.models.Condition(icon = this.icon, text = this.text)
+fun ConditionDto.toDomain(): Condition {
+    return Condition(icon = this.icon, text = this.text)
 }
 
-fun ForecastWeatherDto.toDomain(): com.vickbt.shared.domain.models.ForecastWeather {
-    return com.vickbt.shared.domain.models.ForecastWeather(
+fun ForecastWeatherDto.toDomain(): ForecastWeather {
+    return ForecastWeather(
         current = this.current.toDomain(),
         location = this.location.toDomain(),
         forecast = this.forecast.forecastday.map { it.toDomain() }
     )
 }
 
-fun ForecastDayDto.toDomain(): com.vickbt.shared.domain.models.ForecastDay {
-    return com.vickbt.shared.domain.models.ForecastDay(
+fun ForecastDayDto.toDomain(): ForecastDay {
+    return ForecastDay(
         dateEpoch = Instant.fromEpochSeconds(this.dateEpoch.toLong())
             .toLocalDateTime(TimeZone.currentSystemDefault()),
         day = this.day.toDomain(),
@@ -64,8 +72,8 @@ fun ForecastDayDto.toDomain(): com.vickbt.shared.domain.models.ForecastDay {
     )
 }
 
-fun DayForecastDto.toDomain(): com.vickbt.shared.domain.models.DayForecast {
-    return com.vickbt.shared.domain.models.DayForecast(
+fun DayForecastDto.toDomain(): DayForecast {
+    return DayForecast(
         avghumidity = this.avghumidity,
         avgtempC = this.avgtempC,
         avgtempF = this.avgtempF,
@@ -89,8 +97,8 @@ fun DayForecastDto.toDomain(): com.vickbt.shared.domain.models.DayForecast {
     )
 }
 
-fun HourForecastDto.toDomain(): com.vickbt.shared.domain.models.HourForecast {
-    return com.vickbt.shared.domain.models.HourForecast(
+fun HourForecastDto.toDomain(): HourForecast {
+    return HourForecast(
         chanceOfRain = this.chanceOfRain,
         chanceOfSnow = this.chanceOfSnow,
         cloud = this.cloud,
@@ -111,8 +119,8 @@ fun HourForecastDto.toDomain(): com.vickbt.shared.domain.models.HourForecast {
     )
 }
 
-fun HistoryForecastDto.toDomain(): com.vickbt.shared.domain.models.HistoryForecast {
-    return com.vickbt.shared.domain.models.HistoryForecast(
+fun HistoryForecastDto.toDomain(): HistoryForecast {
+    return HistoryForecast(
         forecast = this.forecast.forecastday.map { it.toDomain() },
         location = this.location.toDomain()
     )

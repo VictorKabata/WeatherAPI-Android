@@ -1,15 +1,15 @@
-package com.vickbt.repository.datasource
+package com.vickbt.shared.repository.datasource
 
 import com.vickbt.shared.network.WeatherApiService
 import com.vickbt.shared.network.utils.safeApiCall
-import com.vickbt.repository.mappers.toDomain
-import com.vickbt.repository.utils.LocationService
+import com.vickbt.shared.repository.mappers.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import utils.LocationService
 import kotlin.time.Duration.Companion.days
 
 class WeatherRepositoryImpl(

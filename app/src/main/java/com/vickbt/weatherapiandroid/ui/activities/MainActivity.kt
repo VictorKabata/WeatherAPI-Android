@@ -38,9 +38,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.compose.rememberNavController
-import com.vickbt.repository.utils.areLocationPermissionsAlreadyGranted
-import com.vickbt.repository.utils.decideCurrentPermissionStatus
-import com.vickbt.repository.utils.openApplicationSettings
+import utils.areLocationPermissionsAlreadyGranted
+import utils.decideCurrentPermissionStatus
+import utils.openApplicationSettings
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.NavigationDrawerContent
 import com.vickbt.weatherapiandroid.ui.navigation.Navigation

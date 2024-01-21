@@ -2,7 +2,7 @@ package com.vickbt.weatherapiandroid.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vickbt.repository.datasource.WeatherRepositoryImpl
+import com.vickbt.shared.repository.datasource.WeatherRepositoryImpl
 import com.vickbt.weatherapiandroid.utils.HomeUiStates
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow

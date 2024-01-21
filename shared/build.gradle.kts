@@ -44,7 +44,8 @@ kotlin {
         }
 
         sourceSets["androidMain"].dependencies {
-
+            implementation(libs.play.services.location)
+            implementation(libs.play.services.maps)
         }
 
         sourceSets["androidUnitTest"].dependencies {

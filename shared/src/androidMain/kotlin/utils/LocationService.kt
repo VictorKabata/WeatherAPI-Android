@@ -1,4 +1,4 @@
-package com.vickbt.repository.utils
+package utils
 
 import android.annotation.SuppressLint
 import android.content.Context
