@@ -1,17 +1,23 @@
 package com.vickbt.weatherapiandroid.utils
 
-import com.vickbt.shared.domain.utils.MEASUREMENT_OPTIONS
+import com.vickbt.shared.domain.utils.MeasurementOptions
 
-fun Double.toTempUnitOfMeasurement(unitOfMeasurement: MEASUREMENT_OPTIONS): String {
+fun Double.toTempUnitOfMeasurement(unitOfMeasurement: MeasurementOptions): String {
     val value = this.toInt()
 
-    return if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) "$value°C"
-    else "$value°F"
+    return if (unitOfMeasurement == MeasurementOptions.METRIC) {
+        "$value°C"
+    } else {
+        "$value°F"
+    }
 }
 
-fun Double.toSpeedUnitOfMeasurement(unitOfMeasurement: MEASUREMENT_OPTIONS): String {
+fun Double.toSpeedUnitOfMeasurement(unitOfMeasurement: MeasurementOptions): String {
     val value = this.toInt()
 
-    return if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) "$value km/h"
-    else "$value m/h"
+    return if (unitOfMeasurement == MeasurementOptions.METRIC) {
+        "$value km/h"
+    } else {
+        "$value m/h"
+    }
 }

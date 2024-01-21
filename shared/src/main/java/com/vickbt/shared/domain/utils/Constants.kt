@@ -9,10 +9,10 @@ object Constants {
     const val MEASUREMENT_KEY = "measurement_key"
 }
 
-enum class THEME_OPTIONS {
+enum class ThemeOptions {
     LIGHT_THEME, DARK_THEME
 }
 
-enum class MEASUREMENT_OPTIONS {
+enum class MeasurementOptions {
     METRIC, IMPERIAL
 }

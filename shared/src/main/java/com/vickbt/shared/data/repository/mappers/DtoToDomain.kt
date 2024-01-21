@@ -16,17 +16,17 @@ import com.vickbt.shared.domain.models.ForecastWeather
 import com.vickbt.shared.domain.models.HistoryForecast
 import com.vickbt.shared.domain.models.HourForecast
 import com.vickbt.shared.domain.models.Location
-import com.vickbt.shared.domain.utils.MEASUREMENT_OPTIONS
+import com.vickbt.shared.domain.utils.MeasurementOptions
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-fun CurrentDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): Current {
+fun CurrentDto.toDomain(unitOfMeasurement: MeasurementOptions): Current {
     return Current(
         condition = this.condition.toDomain(),
         feelslikeC = this.feelslikeC,
         feelslikeF = this.feelslikeF,
-        feelslike = if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) feelslikeC else feelslikeF,
+        feelslike = if (unitOfMeasurement == MeasurementOptions.METRIC) feelslikeC else feelslikeF,
         humidity = this.humidity,
         isDay = this.isDay,
         lastUpdated = this.lastUpdated,
@@ -36,11 +36,11 @@ fun CurrentDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): Current {
         pressureMb = this.pressureMb,
         tempC = this.tempC,
         tempF = this.tempF,
-        temp = if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) tempC else tempF,
+        temp = if (unitOfMeasurement == MeasurementOptions.METRIC) tempC else tempF,
         uv = this.uv,
         windKph = this.windKph,
         windMph = this.windMph,
-        wind = if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) windKph else windMph
+        wind = if (unitOfMeasurement == MeasurementOptions.METRIC) windKph else windMph
     )
 }
 
@@ -59,7 +59,7 @@ fun ConditionDto.toDomain(): Condition {
     return Condition(icon = this.icon, text = this.text)
 }
 
-fun ForecastWeatherDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): ForecastWeather {
+fun ForecastWeatherDto.toDomain(unitOfMeasurement: MeasurementOptions): ForecastWeather {
     return ForecastWeather(
         current = this.current.toDomain(unitOfMeasurement = unitOfMeasurement),
         location = this.location.toDomain(),
@@ -67,7 +67,7 @@ fun ForecastWeatherDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): Forecas
     )
 }
 
-fun ForecastDayDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): ForecastDay {
+fun ForecastDayDto.toDomain(unitOfMeasurement: MeasurementOptions): ForecastDay {
     return ForecastDay(
         dateEpoch = Instant.fromEpochSeconds(this.dateEpoch.toLong())
             .toLocalDateTime(TimeZone.currentSystemDefault()),
@@ -76,15 +76,15 @@ fun ForecastDayDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): ForecastDay
     )
 }
 
-fun DayForecastDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): DayForecast {
+fun DayForecastDto.toDomain(unitOfMeasurement: MeasurementOptions): DayForecast {
     return DayForecast(
         avghumidity = this.avghumidity,
         avgtempC = this.avgtempC,
         avgtempF = this.avgtempF,
-        avgTemp = if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) avgtempC else avgtempF,
+        avgTemp = if (unitOfMeasurement == MeasurementOptions.METRIC) avgtempC else avgtempF,
         avgvisKm = this.avgvisKm,
         avgvisMiles = this.avgvisMiles,
-        avgvis = if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) avgvisKm else avgvisMiles,
+        avgvis = if (unitOfMeasurement == MeasurementOptions.METRIC) avgvisKm else avgvisMiles,
         condition = this.condition.toDomain(),
         dailyChanceOfRain = this.dailyChanceOfRain,
         dailyChanceOfSnow = this.dailyChanceOfSnow,
@@ -92,13 +92,13 @@ fun DayForecastDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): DayForecast
         dailyWillItSnow = this.dailyWillItSnow,
         maxtempC = this.maxtempC,
         maxtempF = this.maxtempF,
-        maxtemp = if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) maxtempC else maxtempF,
+        maxtemp = if (unitOfMeasurement == MeasurementOptions.METRIC) maxtempC else maxtempF,
         maxwindKph = this.maxwindKph,
         maxwindMph = this.maxwindMph,
-        maxwind = if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) maxwindKph else maxwindMph,
+        maxwind = if (unitOfMeasurement == MeasurementOptions.METRIC) maxwindKph else maxwindMph,
         mintempC = this.mintempC,
         mintempF = this.mintempF,
-        mintemp = if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) mintempC else mintempF,
+        mintemp = if (unitOfMeasurement == MeasurementOptions.METRIC) mintempC else mintempF,
         totalprecipIn = this.totalprecipIn,
         totalprecipMm = this.totalprecipMm,
         totalsnowCm = this.totalsnowCm,
@@ -106,7 +106,7 @@ fun DayForecastDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): DayForecast
     )
 }
 
-fun HourForecastDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): HourForecast {
+fun HourForecastDto.toDomain(unitOfMeasurement: MeasurementOptions): HourForecast {
     return HourForecast(
         chanceOfRain = this.chanceOfRain,
         chanceOfSnow = this.chanceOfSnow,
@@ -114,12 +114,12 @@ fun HourForecastDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): HourForeca
         condition = this.condition.toDomain(),
         feelslikeC = this.feelslikeC,
         feelslikeF = this.feelslikeF,
-        feelslike = if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) feelslikeC else feelslikeF,
+        feelslike = if (unitOfMeasurement == MeasurementOptions.METRIC) feelslikeC else feelslikeF,
         humidity = this.humidity,
         snowCm = this.snowCm,
         tempC = this.tempC,
         tempF = this.tempF,
-        temp = if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) tempC else tempF,
+        temp = if (unitOfMeasurement == MeasurementOptions.METRIC) tempC else tempF,
         timeEpoch = Instant.fromEpochSeconds(this.timeEpoch.toLong())
             .toLocalDateTime(TimeZone.currentSystemDefault()),
         uv = this.uv,
@@ -127,11 +127,11 @@ fun HourForecastDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): HourForeca
         willItSnow = this.willItSnow,
         windKph = this.windKph,
         windMph = this.windMph,
-        wind = if (unitOfMeasurement == MEASUREMENT_OPTIONS.METRIC) windKph else windMph
+        wind = if (unitOfMeasurement == MeasurementOptions.METRIC) windKph else windMph
     )
 }
 
-fun HistoryForecastDto.toDomain(unitOfMeasurement: MEASUREMENT_OPTIONS): HistoryForecast {
+fun HistoryForecastDto.toDomain(unitOfMeasurement: MeasurementOptions): HistoryForecast {
     return HistoryForecast(
         forecast = this.forecast.forecastday.map { it.toDomain(unitOfMeasurement = unitOfMeasurement) },
         location = this.location.toDomain()

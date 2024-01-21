@@ -40,12 +40,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.compose.rememberNavController
-import com.vickbt.shared.domain.utils.MEASUREMENT_OPTIONS
-import com.vickbt.shared.domain.utils.THEME_OPTIONS
+import com.vickbt.shared.domain.utils.MeasurementOptions
+import com.vickbt.shared.domain.utils.ThemeOptions
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.NavigationDrawerContent
 import com.vickbt.weatherapiandroid.ui.navigation.Navigation
-import com.vickbt.weatherapiandroid.ui.screens.home.HomeViewModel
 import com.vickbt.weatherapiandroid.ui.theme.WeatherAPIAndroidTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -81,17 +80,20 @@ class MainActivity : ComponentActivity() {
             var currentPermissionsStatus by remember {
                 mutableStateOf(
                     decideCurrentPermissionStatus(
-                        locationPermissionsGranted, shouldShowPermissionRationale
+                        locationPermissionsGranted,
+                        shouldShowPermissionRationale
                     )
                 )
             }
 
             val locationPermissions = arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
             )
 
             val locationPermissionLauncher =
-                rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestMultiplePermissions(),
+                rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.RequestMultiplePermissions(),
                     onResult = { permissions ->
                         locationPermissionsGranted =
                             permissions.values.reduce { acc, isPermissionGranted ->
@@ -105,9 +107,11 @@ class MainActivity : ComponentActivity() {
                         shouldDirectUserToApplicationSettings =
                             !shouldShowPermissionRationale && !locationPermissionsGranted
                         currentPermissionsStatus = decideCurrentPermissionStatus(
-                            locationPermissionsGranted, shouldShowPermissionRationale
+                            locationPermissionsGranted,
+                            shouldShowPermissionRationale
                         )
-                    })
+                    }
+                )
 
             val lifecycleOwner = LocalLifecycleOwner.current
             DisposableEffect(key1 = lifecycleOwner, effect = {
@@ -126,27 +130,34 @@ class MainActivity : ComponentActivity() {
             val snackbarHostState = remember { SnackbarHostState() }
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-            WeatherAPIAndroidTheme(darkTheme = mainUiState?.theme == THEME_OPTIONS.DARK_THEME) {
+            WeatherAPIAndroidTheme(darkTheme = mainUiState?.theme == ThemeOptions.DARK_THEME) {
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     ModalNavigationDrawer(
                         drawerContent = {
                             NavigationDrawerContent(
                                 modifier = Modifier,
-                                isDarkTheme = mainUiState?.theme != THEME_OPTIONS.LIGHT_THEME,
+                                isDarkTheme = mainUiState?.theme != ThemeOptions.LIGHT_THEME,
                                 onThemeCheckChanged = {
                                     mainViewModel.saveThemePreference(
-                                        selection = if (it) THEME_OPTIONS.DARK_THEME.ordinal
-                                        else THEME_OPTIONS.LIGHT_THEME.ordinal
+                                        selection = if (it) {
+                                            ThemeOptions.DARK_THEME.ordinal
+                                        } else {
+                                            ThemeOptions.LIGHT_THEME.ordinal
+                                        }
                                     )
                                 },
                                 isImperial = mainUiState?.unitOfMeasurement
-                                        != MEASUREMENT_OPTIONS.METRIC,
+                                        != MeasurementOptions.METRIC,
                                 onImperialCheckChanged = {
                                     mainViewModel.saveMeasurementPreference(
-                                        selection = if (it) MEASUREMENT_OPTIONS.IMPERIAL.ordinal
-                                        else MEASUREMENT_OPTIONS.METRIC.ordinal
+                                        selection = if (it) {
+                                            MeasurementOptions.IMPERIAL.ordinal
+                                        } else {
+                                            MeasurementOptions.METRIC.ordinal
+                                        }
                                     )
                                 }
                             )
@@ -199,7 +210,8 @@ class MainActivity : ComponentActivity() {
                             if (locationPermissionsGranted) {
                                 val navController = rememberNavController()
                                 Navigation(
-                                    navController = navController, paddingValues = paddingValues
+                                    navController = navController,
+                                    paddingValues = paddingValues
                                 )
                             }
                         }

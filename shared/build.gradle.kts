@@ -45,7 +45,6 @@ kotlin {
         }
 
         sourceSets["commonTest"].dependencies {
-
         }
 
         sourceSets["androidMain"].dependencies {
@@ -54,10 +53,8 @@ kotlin {
         }
 
         sourceSets["androidUnitTest"].dependencies {
-
         }
     }
-
 }
 
 android {

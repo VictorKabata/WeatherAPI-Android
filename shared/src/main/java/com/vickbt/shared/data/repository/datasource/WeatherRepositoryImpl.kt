@@ -8,8 +8,8 @@ import com.vickbt.shared.data.network.utils.safeApiCall
 import com.vickbt.shared.data.repository.mappers.toDomain
 import com.vickbt.shared.domain.utils.Constants.MEASUREMENT_KEY
 import com.vickbt.shared.domain.utils.Constants.THEME_KEY
-import com.vickbt.shared.domain.utils.MEASUREMENT_OPTIONS
-import com.vickbt.shared.domain.utils.THEME_OPTIONS
+import com.vickbt.shared.domain.utils.MeasurementOptions
+import com.vickbt.shared.domain.utils.ThemeOptions
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Clock
@@ -33,7 +33,7 @@ class WeatherRepositoryImpl(
         language: String = "en"
     ): Flow<Result<com.vickbt.shared.domain.models.ForecastWeather>> {
         val location = locationService.requestLocationUpdates().first()
-        val unitOfMeasurement = MEASUREMENT_OPTIONS.entries[getMeasurementSettings().first()]
+        val unitOfMeasurement = MeasurementOptions.entries[getMeasurementSettings().first()]
 
         return safeApiCall {
             weatherApiService.fetchForecastWeather(
@@ -51,7 +51,7 @@ class WeatherRepositoryImpl(
     ): Flow<Result<com.vickbt.shared.domain.models.HistoryForecast>> {
         return safeApiCall {
             val location = locationService.requestLocationUpdates().first()
-            val unitOfMeasurement = MEASUREMENT_OPTIONS.entries[getMeasurementSettings().first()]
+            val unitOfMeasurement = MeasurementOptions.entries[getMeasurementSettings().first()]
 
             weatherApiService.fetchHistoryWeather(
                 query = query ?: "${location?.latitude ?: 0.0},${location?.longitude ?: 0.0}",
@@ -69,14 +69,14 @@ class WeatherRepositoryImpl(
     suspend fun getThemeSettings(): Flow<Int> {
         return observableSettings.getIntFlow(
             key = THEME_KEY,
-            defaultValue = THEME_OPTIONS.LIGHT_THEME.ordinal
+            defaultValue = ThemeOptions.LIGHT_THEME.ordinal
         )
     }
 
     suspend fun getMeasurementSettings(): Flow<Int> {
         return observableSettings.getIntFlow(
             key = MEASUREMENT_KEY,
-            defaultValue = MEASUREMENT_OPTIONS.METRIC.ordinal
+            defaultValue = MeasurementOptions.METRIC.ordinal
         )
     }
 }
