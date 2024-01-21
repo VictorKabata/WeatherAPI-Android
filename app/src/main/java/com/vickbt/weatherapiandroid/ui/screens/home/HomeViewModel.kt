@@ -58,4 +58,9 @@ class HomeViewModel(private val weatherRepository: WeatherRepositoryImpl) :
             _homeUiState.update { it.copy(unitOfMeasurement = MeasurementOptions.entries[unitsIndex]) }
         }
     }
+
+    fun refresh() {
+        fetchForecastWeather()
+        fetchHistoryWeather()
+    }
 }

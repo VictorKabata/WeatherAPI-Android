@@ -62,8 +62,6 @@ class MainActivity : ComponentActivity() {
 
             val mainUiState = mainViewModel.mainUiState.collectAsState().value
 
-            Log.e("VicKbt", "Main UI state: $mainUiState")
-
             var locationPermissionsGranted by remember {
                 mutableStateOf(
                     areLocationPermissionsAlreadyGranted()
@@ -139,7 +137,7 @@ class MainActivity : ComponentActivity() {
                         drawerContent = {
                             NavigationDrawerContent(
                                 modifier = Modifier,
-                                isDarkTheme = mainUiState?.theme != ThemeOptions.LIGHT_THEME,
+                                isDarkTheme = mainUiState.theme != ThemeOptions.LIGHT_THEME,
                                 onThemeCheckChanged = {
                                     mainViewModel.saveThemePreference(
                                         selection = if (it) {
@@ -149,7 +147,7 @@ class MainActivity : ComponentActivity() {
                                         }
                                     )
                                 },
-                                isImperial = mainUiState?.unitOfMeasurement
+                                isImperial = mainUiState.unitOfMeasurement
                                         != MeasurementOptions.METRIC,
                                 onImperialCheckChanged = {
                                     mainViewModel.saveMeasurementPreference(
