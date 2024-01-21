@@ -39,7 +39,9 @@ kotlin {
             api(libs.koin.core)
             api(libs.napier)
             api(libs.kotlinX.dateTime)
+
             api(libs.multiplatformSettings)
+            api(libs.multiplatformSettings.coroutines)
         }
 
         sourceSets["commonTest"].dependencies {

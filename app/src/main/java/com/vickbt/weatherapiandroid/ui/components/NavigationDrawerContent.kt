@@ -18,6 +18,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -33,11 +37,14 @@ fun NavigationDrawerContent(
     locationQuery: String,
     locationQueryChange: (String) -> Unit,
     onLocationQueried: (String) -> Unit,
-    isThemeCheckedOn: Boolean,
+    isDarkTheme: Boolean,
     onThemeCheckChanged: (Boolean) -> Unit,
-    isImperialCheckedOn: Boolean,
+    isImperial: Boolean,
     onImperialCheckChanged: (Boolean) -> Unit
 ) {
+    var isDarkThemeOn by remember { mutableStateOf(isDarkTheme) }
+    var isImperialOn by remember { mutableStateOf(isImperial) }
+
     ModalDrawerSheet(modifier = modifier) {
         Column(
             modifier = Modifier
@@ -79,7 +86,13 @@ fun NavigationDrawerContent(
                     maxLines = 1
                 )
 
-                Switch(checked = isThemeCheckedOn, onCheckedChange = { onThemeCheckChanged(it) })
+                Switch(
+                    checked = isDarkThemeOn,
+                    onCheckedChange = {
+                        isDarkThemeOn = it
+                        onThemeCheckChanged(it)
+                    }
+                )
             }
             //endregion
 
@@ -101,8 +114,11 @@ fun NavigationDrawerContent(
                 )
 
                 Switch(
-                    checked = isImperialCheckedOn,
-                    onCheckedChange = { onImperialCheckChanged(it) }
+                    checked = isImperialOn,
+                    onCheckedChange = {
+                        isImperialOn = it
+                        onImperialCheckChanged(it)
+                    }
                 )
             }
             //endregion

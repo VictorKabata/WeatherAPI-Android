@@ -19,7 +19,7 @@
         android:theme="@style/Theme.WeatherAPIAndroid"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.WeatherAPIAndroid">

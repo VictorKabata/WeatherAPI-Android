@@ -1,5 +1,12 @@
 package com.vickbt.shared.repository.datasource
 
+import com.russhwolf.settings.ExperimentalSettingsApi
+import com.russhwolf.settings.ObservableSettings
+import com.russhwolf.settings.coroutines.getIntFlow
+import com.vickbt.shared.domain.utils.Constants.MEASUREMENT_KEY
+import com.vickbt.shared.domain.utils.Constants.THEME_KEY
+import com.vickbt.shared.domain.utils.MEASUREMENT_OPTIONS
+import com.vickbt.shared.domain.utils.THEME_OPTIONS
 import com.vickbt.shared.network.WeatherApiService
 import com.vickbt.shared.network.utils.safeApiCall
 import com.vickbt.shared.repository.mappers.toDomain
@@ -12,8 +19,10 @@ import kotlinx.datetime.toLocalDateTime
 import utils.LocationService
 import kotlin.time.Duration.Companion.days
 
+@OptIn(ExperimentalSettingsApi::class)
 class WeatherRepositoryImpl(
     private val weatherApiService: WeatherApiService,
+    private val observableSettings: ObservableSettings,
     private val locationService: LocationService
 ) {
 
@@ -49,5 +58,23 @@ class WeatherRepositoryImpl(
                 endDate = endDate
             ).toDomain()
         }
+    }
+
+    suspend fun saveSettings(key: String, selection: Int) {
+        observableSettings.putInt(key = key, value = selection)
+    }
+
+    suspend fun getThemeSettings(): Flow<Int> {
+        return observableSettings.getIntFlow(
+            key = THEME_KEY,
+            defaultValue = THEME_OPTIONS.LIGHT_THEME.ordinal
+        )
+    }
+
+    suspend fun getMeasurementSettings(): Flow<Int> {
+        return observableSettings.getIntFlow(
+            key = MEASUREMENT_KEY,
+            defaultValue = MEASUREMENT_OPTIONS.METRIC.ordinal
+        )
     }
 }

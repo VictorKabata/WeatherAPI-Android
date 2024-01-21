@@ -1,8 +1,9 @@
-package com.vickbt.weatherapiandroid.ui.activities
+package com.vickbt.weatherapiandroid.ui.activities.main
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -27,6 +28,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,14 +40,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.compose.rememberNavController
-import utils.areLocationPermissionsAlreadyGranted
-import utils.decideCurrentPermissionStatus
-import utils.openApplicationSettings
+import com.vickbt.shared.domain.utils.THEME_OPTIONS
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.NavigationDrawerContent
 import com.vickbt.weatherapiandroid.ui.navigation.Navigation
 import com.vickbt.weatherapiandroid.ui.theme.WeatherAPIAndroidTheme
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
+import utils.areLocationPermissionsAlreadyGranted
+import utils.decideCurrentPermissionStatus
+import utils.openApplicationSettings
 
 @OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
@@ -53,6 +57,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val mainViewModel = koinViewModel<MainViewModel>()
+
+            val themeOption = mainViewModel.themePreference.collectAsState().value
+
             var locationPermissionsGranted by remember {
                 mutableStateOf(
                     areLocationPermissionsAlreadyGranted()
@@ -69,80 +77,73 @@ class MainActivity : ComponentActivity() {
             var currentPermissionsStatus by remember {
                 mutableStateOf(
                     decideCurrentPermissionStatus(
-                        locationPermissionsGranted,
-                        shouldShowPermissionRationale
+                        locationPermissionsGranted, shouldShowPermissionRationale
                     )
                 )
             }
 
             val locationPermissions = arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
             )
 
-            val locationPermissionLauncher = rememberLauncherForActivityResult(
-                contract = ActivityResultContracts.RequestMultiplePermissions(),
-                onResult = { permissions ->
-                    locationPermissionsGranted =
-                        permissions.values.reduce { acc, isPermissionGranted ->
-                            acc && isPermissionGranted
+            val locationPermissionLauncher =
+                rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestMultiplePermissions(),
+                    onResult = { permissions ->
+                        locationPermissionsGranted =
+                            permissions.values.reduce { acc, isPermissionGranted ->
+                                acc && isPermissionGranted
+                            }
+
+                        if (!locationPermissionsGranted) {
+                            shouldShowPermissionRationale =
+                                shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
                         }
-
-                    if (!locationPermissionsGranted) {
-                        shouldShowPermissionRationale =
-                            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
-                    }
-                    shouldDirectUserToApplicationSettings =
-                        !shouldShowPermissionRationale && !locationPermissionsGranted
-                    currentPermissionsStatus = decideCurrentPermissionStatus(
-                        locationPermissionsGranted,
-                        shouldShowPermissionRationale
-                    )
-                }
-            )
+                        shouldDirectUserToApplicationSettings =
+                            !shouldShowPermissionRationale && !locationPermissionsGranted
+                        currentPermissionsStatus = decideCurrentPermissionStatus(
+                            locationPermissionsGranted, shouldShowPermissionRationale
+                        )
+                    })
 
             val lifecycleOwner = LocalLifecycleOwner.current
-            DisposableEffect(
-                key1 = lifecycleOwner,
-                effect = {
-                    val observer = LifecycleEventObserver { _, event ->
-                        if (event == Lifecycle.Event.ON_START &&
-                            !locationPermissionsGranted &&
-                            !shouldShowPermissionRationale
-                        ) {
-                            locationPermissionLauncher.launch(locationPermissions)
-                        }
-                    }
-                    lifecycleOwner.lifecycle.addObserver(observer)
-                    onDispose {
-                        lifecycleOwner.lifecycle.removeObserver(observer)
+            DisposableEffect(key1 = lifecycleOwner, effect = {
+                val observer = LifecycleEventObserver { _, event ->
+                    if (event == Lifecycle.Event.ON_START && !locationPermissionsGranted && !shouldShowPermissionRationale) {
+                        locationPermissionLauncher.launch(locationPermissions)
                     }
                 }
-            )
+                lifecycleOwner.lifecycle.addObserver(observer)
+                onDispose {
+                    lifecycleOwner.lifecycle.removeObserver(observer)
+                }
+            })
 
             val scope = rememberCoroutineScope()
             val snackbarHostState = remember { SnackbarHostState() }
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-            WeatherAPIAndroidTheme {
+            WeatherAPIAndroidTheme(darkTheme = themeOption == THEME_OPTIONS.DARK_THEME) {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
                     ModalNavigationDrawer(
                         drawerContent = {
-                            NavigationDrawerContent(
-                                modifier = Modifier,
+                            NavigationDrawerContent(modifier = Modifier,
                                 locationQuery = "",
                                 locationQueryChange = {},
                                 onLocationQueried = { },
-                                isThemeCheckedOn = false,
-                                onThemeCheckChanged = {},
-                                isImperialCheckedOn = false,
-                                onImperialCheckChanged = {}
-                            )
-                        },
-                        drawerState = drawerState
+                                isDarkTheme = themeOption != THEME_OPTIONS.LIGHT_THEME,
+                                onThemeCheckChanged = {
+                                    Log.e("VicKbt", "Theme option: ${themeOption?.name}")
+                                    Log.e("VicKbt", "Theme change: $it")
+                                    mainViewModel.saveThemePreference(
+                                        selection = if (it) THEME_OPTIONS.DARK_THEME.ordinal
+                                        else THEME_OPTIONS.LIGHT_THEME.ordinal
+                                    )
+                                },
+                                isImperial = false,
+                                onImperialCheckChanged = {})
+                        }, drawerState = drawerState
                     ) {
                         Scaffold(
                             modifier = Modifier.fillMaxSize(),
@@ -190,8 +191,7 @@ class MainActivity : ComponentActivity() {
                             if (locationPermissionsGranted) {
                                 val navController = rememberNavController()
                                 Navigation(
-                                    navController = navController,
-                                    paddingValues = paddingValues
+                                    navController = navController, paddingValues = paddingValues
                                 )
                             }
                         }
@@ -205,6 +205,5 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun Preview() {
-    WeatherAPIAndroidTheme {
-    }
+    WeatherAPIAndroidTheme {}
 }

@@ -2,6 +2,7 @@ package com.vickbt.shared.di
 
 import android.content.Context
 import com.google.android.gms.location.LocationServices
+import com.vickbt.shared.cache.MultiplatformSettingsWrapper
 import com.vickbt.shared.network.WeatherApiClient
 import com.vickbt.shared.network.WeatherApiService
 import com.vickbt.shared.repository.datasource.WeatherRepositoryImpl
@@ -17,6 +18,10 @@ val sharedModule: Module = module {
     single { WeatherApiClient.createWeatherApiClient(enableNetworkLogs = BuildConfig.DEBUG) }
 
     singleOf(::WeatherApiService)
+
+    single {
+        MultiplatformSettingsWrapper.createSettings(context = get<Context>())
+    }
 
     singleOf(::WeatherRepositoryImpl)
 
