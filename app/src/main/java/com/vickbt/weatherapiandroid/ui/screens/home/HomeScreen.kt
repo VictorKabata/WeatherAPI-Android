@@ -40,6 +40,7 @@ import com.vickbt.shared.domain.utils.toReadableFormat
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.DayCondition
 import com.vickbt.weatherapiandroid.ui.components.ExtraCondition
+import com.vickbt.weatherapiandroid.utils.toImageFormat
 import com.vickbt.weatherapiandroid.utils.toSpeedUnitOfMeasurement
 import com.vickbt.weatherapiandroid.utils.toTempUnitOfMeasurement
 import org.koin.compose.koinInject
@@ -109,8 +110,10 @@ fun HomeScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
-                        modifier = Modifier.size(120.dp),
-                        painter = rememberImagePainter(R.drawable.weather_placeholder),
+                        modifier = Modifier.size(150.dp),
+                        painter = rememberImagePainter(
+                            homeUiState.forecastWeather.current.condition.icon.toImageFormat()
+                        ),
                         contentDescription = homeUiState.forecastWeather.current.condition.text,
                         contentScale = ContentScale.Crop
                     )
@@ -186,7 +189,7 @@ fun HomeScreen(
                     items(items = homeUiState.forecastWeather.forecast) {
                         DayCondition(
                             modifier = Modifier.size(90.dp),
-                            icon = R.drawable.weather_placeholder,
+                            imageUrl = it.day.condition.icon.toImageFormat(),
                             dayOfWeek = it.dateEpoch.dayOfWeek.toString().uppercase(),
                             minTemp = it.day.mintemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement),
                             maxTemp = it.day.maxtemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement)
@@ -209,7 +212,7 @@ fun HomeScreen(
                             modifier = Modifier
                                 .width(90.dp)
                                 .height(120.dp),
-                            icon = R.drawable.weather_placeholder,
+                            imageUrl = it.day.condition.icon.toImageFormat(),
                             dayOfWeek = it.dateEpoch.dayOfWeek.toString().uppercase(),
                             dateOfMonth = it.dateEpoch.dayOfMonth.toString(),
                             minTemp = it.day.mintemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement),

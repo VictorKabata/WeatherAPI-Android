@@ -21,3 +21,7 @@ fun Double.toSpeedUnitOfMeasurement(unitOfMeasurement: MeasurementOptions): Stri
         "$value m/h"
     }
 }
+
+fun String.toImageFormat(): String {
+    return "https:$this"
+}
