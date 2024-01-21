@@ -1,12 +1,12 @@
 package com.vickbt.weatherapiandroid.ui.activities.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vickbt.shared.data.repository.datasource.WeatherRepositoryImpl
 import com.vickbt.shared.domain.utils.Constants.MEASUREMENT_KEY
 import com.vickbt.shared.domain.utils.Constants.THEME_KEY
+import com.vickbt.shared.domain.utils.MEASUREMENT_OPTIONS
 import com.vickbt.shared.domain.utils.THEME_OPTIONS
-import com.vickbt.shared.data.repository.datasource.WeatherRepositoryImpl
 import com.vickbt.weatherapiandroid.utils.MainUiStates
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,12 +21,18 @@ class MainViewModel(private val weatherRepository: WeatherRepositoryImpl) :
 
     init {
         getThemePreference()
+        getMeasurementPreference()
     }
 
     fun getThemePreference() = viewModelScope.launch {
         weatherRepository.getThemeSettings().collect { themeIndex ->
-            Log.e("VicKbt", "Theme index: $themeIndex")
             _mainUiState.update { it.copy(theme = THEME_OPTIONS.entries[themeIndex]) }
+        }
+    }
+
+    fun getMeasurementPreference() = viewModelScope.launch {
+        weatherRepository.getMeasurementSettings().collect { unitIndex ->
+            _mainUiState.update { it.copy(unitOfMeasurement = MEASUREMENT_OPTIONS.entries[unitIndex]) }
         }
     }
 

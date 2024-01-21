@@ -11,7 +11,7 @@ import com.vickbt.weatherapiandroid.ui.screens.home.HomeScreen
 fun Navigation(navController: NavHostController, paddingValues: PaddingValues) {
     NavHost(navController = navController, startDestination = NavigationItem.Home.route) {
         composable(route = NavigationItem.Home.route) {
-            HomeScreen(navController = navController, paddingValues = paddingValues)
+            HomeScreen(paddingValues = paddingValues)
         }
 
         /*ToDo: Set settings screen

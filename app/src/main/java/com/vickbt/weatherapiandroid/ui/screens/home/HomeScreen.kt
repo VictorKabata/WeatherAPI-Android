@@ -24,6 +24,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -32,23 +35,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.vickbt.shared.domain.utils.toReadableFormat
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.DayCondition
 import com.vickbt.weatherapiandroid.ui.components.ExtraCondition
+import com.vickbt.weatherapiandroid.utils.toSpeedUnitOfMeasurement
+import com.vickbt.weatherapiandroid.utils.toTempUnitOfMeasurement
 import org.koin.compose.koinInject
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
-    navController: NavController,
     paddingValues: PaddingValues,
     viewModel: HomeViewModel = koinInject()
 ) {
     val homeUiState = viewModel.homeUiState.collectAsState().value
     val scrollState = rememberScrollState()
+
+    val unitOfMeasurement by remember { mutableStateOf(homeUiState.unitOfMeasurement) }
 
     Box(
         modifier = Modifier
@@ -111,7 +116,8 @@ fun HomeScreen(
                     )
 
                     Text(
-                        text = homeUiState.forecastWeather.current.tempC.toInt().toString(),
+                        text = homeUiState.forecastWeather.current.temp
+                            .toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement),
                         fontSize = 80.sp,
                         fontWeight = FontWeight.ExtraBold,
                         maxLines = 1
@@ -146,14 +152,16 @@ fun HomeScreen(
                         ExtraCondition(
                             icon = R.drawable.weather_placeholder,
                             title = R.string.feels_like,
-                            value = "${homeUiState.forecastWeather.current.tempC}"
+                            value = homeUiState.forecastWeather.current.temp
+                                .toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement)
                         )
                     }
                     item {
                         ExtraCondition(
                             icon = R.drawable.weather_placeholder,
                             title = R.string.wind,
-                            value = "${homeUiState.forecastWeather.current.windKph}km/h"
+                            value = homeUiState.forecastWeather.current.wind
+                                .toSpeedUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement)
                         )
                     }
                     item {
@@ -182,8 +190,8 @@ fun HomeScreen(
                                 .height(90.dp),
                             icon = R.drawable.weather_placeholder,
                             dayOfWeek = it.dateEpoch.dayOfWeek.toString().uppercase(),
-                            minTemp = it.day.mintempC.toInt().toString(),
-                            maxTemp = it.day.maxtempC.toInt().toString()
+                            minTemp = it.day.mintemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement),
+                            maxTemp = it.day.maxtemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement)
                         )
                     }
                 }
@@ -206,8 +214,8 @@ fun HomeScreen(
                             icon = R.drawable.weather_placeholder,
                             dayOfWeek = it.dateEpoch.dayOfWeek.toString().uppercase(),
                             dateOfMonth = it.dateEpoch.dayOfMonth.toString(),
-                            minTemp = it.day.mintempC.toInt().toString(),
-                            maxTemp = it.day.maxtempC.toInt().toString()
+                            minTemp = it.day.mintemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement),
+                            maxTemp = it.day.maxtemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement)
                         )
                     }
                 }

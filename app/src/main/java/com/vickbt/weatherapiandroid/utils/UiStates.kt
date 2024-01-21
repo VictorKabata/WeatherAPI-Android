@@ -13,5 +13,6 @@ data class HomeUiStates(
     val isLoading: Boolean = true,
     val error: String? = null,
     val forecastWeather: com.vickbt.shared.domain.models.ForecastWeather? = null,
-    val historyWeather: com.vickbt.shared.domain.models.HistoryForecast? = null
+    val historyWeather: com.vickbt.shared.domain.models.HistoryForecast? = null,
+    val unitOfMeasurement: MEASUREMENT_OPTIONS = MEASUREMENT_OPTIONS.METRIC
 )

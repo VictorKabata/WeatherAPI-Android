@@ -3,6 +3,7 @@ package com.vickbt.weatherapiandroid.ui.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vickbt.shared.data.repository.datasource.WeatherRepositoryImpl
+import com.vickbt.shared.domain.utils.MEASUREMENT_OPTIONS
 import com.vickbt.weatherapiandroid.utils.HomeUiStates
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +24,7 @@ class HomeViewModel(private val weatherRepository: WeatherRepositoryImpl) :
     init {
         fetchForecastWeather()
         fetchHistoryWeather()
+        fetchUnitOfMeasurement()
     }
 
     fun fetchForecastWeather(query: String? = null) =
@@ -50,4 +52,10 @@ class HomeViewModel(private val weatherRepository: WeatherRepositoryImpl) :
                 }
             }
         }
+
+    fun fetchUnitOfMeasurement() = viewModelScope.launch {
+        weatherRepository.getMeasurementSettings().collect { unitsIndex ->
+            _homeUiState.update { it.copy(unitOfMeasurement = MEASUREMENT_OPTIONS.entries[unitsIndex]) }
+        }
+    }
 }

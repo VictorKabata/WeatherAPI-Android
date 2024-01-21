@@ -3,13 +3,13 @@ package com.vickbt.shared.data.repository.datasource
 import com.russhwolf.settings.ExperimentalSettingsApi
 import com.russhwolf.settings.ObservableSettings
 import com.russhwolf.settings.coroutines.getIntFlow
+import com.vickbt.shared.data.network.WeatherApiService
+import com.vickbt.shared.data.network.utils.safeApiCall
+import com.vickbt.shared.data.repository.mappers.toDomain
 import com.vickbt.shared.domain.utils.Constants.MEASUREMENT_KEY
 import com.vickbt.shared.domain.utils.Constants.THEME_KEY
 import com.vickbt.shared.domain.utils.MEASUREMENT_OPTIONS
 import com.vickbt.shared.domain.utils.THEME_OPTIONS
-import com.vickbt.shared.data.network.WeatherApiService
-import com.vickbt.shared.data.network.utils.safeApiCall
-import com.vickbt.shared.data.repository.mappers.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Clock
@@ -33,12 +33,13 @@ class WeatherRepositoryImpl(
         language: String = "en"
     ): Flow<Result<com.vickbt.shared.domain.models.ForecastWeather>> {
         val location = locationService.requestLocationUpdates().first()
+        val unitOfMeasurement = MEASUREMENT_OPTIONS.entries[getMeasurementSettings().first()]
 
         return safeApiCall {
             weatherApiService.fetchForecastWeather(
                 query = query ?: "${location?.latitude ?: 0.0},${location?.longitude ?: 0.0}",
                 language = language
-            ).toDomain()
+            ).toDomain(unitOfMeasurement = unitOfMeasurement)
         }
     }
 
@@ -50,13 +51,14 @@ class WeatherRepositoryImpl(
     ): Flow<Result<com.vickbt.shared.domain.models.HistoryForecast>> {
         return safeApiCall {
             val location = locationService.requestLocationUpdates().first()
+            val unitOfMeasurement = MEASUREMENT_OPTIONS.entries[getMeasurementSettings().first()]
 
             weatherApiService.fetchHistoryWeather(
                 query = query ?: "${location?.latitude ?: 0.0},${location?.longitude ?: 0.0}",
                 language = language,
                 startDate = startDate,
                 endDate = endDate
-            ).toDomain()
+            ).toDomain(unitOfMeasurement = unitOfMeasurement)
         }
     }
 
