@@ -29,7 +29,7 @@ fun DayCondition(
     modifier: Modifier,
     @DrawableRes icon: Int,
     dayOfWeek: String,
-    dateOfMonth: String?=null,
+    dateOfMonth: String? = null,
     minTemp: String,
     maxTemp: String
 ) {
@@ -48,7 +48,7 @@ fun DayCondition(
                 textAlign = TextAlign.Center
             )
 
-            if (dateOfMonth!=null){
+            if (dateOfMonth != null) {
                 Text(
                     text = dateOfMonth,
                     fontWeight = FontWeight.SemiBold,

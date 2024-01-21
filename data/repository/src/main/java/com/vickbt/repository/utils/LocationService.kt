@@ -25,7 +25,6 @@ class LocationService(
 
     @SuppressLint("MissingPermission")
     fun requestLocationUpdates(): Flow<LatLng?> = callbackFlow {
-
         if (!context.areLocationPermissionsAlreadyGranted()) {
             trySend(null)
             return@callbackFlow
@@ -58,7 +57,6 @@ class LocationService(
     fun requestCurrentLocation(): Flow<LatLng?> {
         TODO("Not yet implemented")
     }
-
 }
 
 fun Context.areLocationPermissionsAlreadyGranted(): Boolean {
@@ -84,7 +82,11 @@ fun decideCurrentPermissionStatus(
     locationPermissionsGranted: Boolean,
     shouldShowPermissionRationale: Boolean
 ): String {
-    return if (locationPermissionsGranted) "Granted"
-    else if (shouldShowPermissionRationale) "Rejected"
-    else "Denied"
+    return if (locationPermissionsGranted) {
+        "Granted"
+    } else if (shouldShowPermissionRationale) {
+        "Rejected"
+    } else {
+        "Denied"
+    }
 }

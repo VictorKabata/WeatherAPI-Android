@@ -42,7 +42,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             var locationPermissionsGranted by remember {
                 mutableStateOf(
                     areLocationPermissionsAlreadyGranted()
@@ -88,10 +87,13 @@ class MainActivity : ComponentActivity() {
                         locationPermissionsGranted,
                         shouldShowPermissionRationale
                     )
-                })
+                }
+            )
 
             val lifecycleOwner = LocalLifecycleOwner.current
-            DisposableEffect(key1 = lifecycleOwner, effect = {
+            DisposableEffect(
+                key1 = lifecycleOwner,
+                effect = {
                 val observer = LifecycleEventObserver { _, event ->
                     if (event == Lifecycle.Event.ON_START &&
                         !locationPermissionsGranted &&
@@ -119,7 +121,6 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
                     ) {
-
                         if (shouldShowPermissionRationale) {
                             LaunchedEffect(Unit) {
                                 scope.launch {
@@ -156,7 +157,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

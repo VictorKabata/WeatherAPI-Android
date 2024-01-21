@@ -52,7 +52,7 @@ internal object WeatherApiClient {
                 Json {
                     ignoreUnknownKeys = true
                     isLenient = true
-                    explicitNulls=false
+                    explicitNulls = false
                 }
             )
         }

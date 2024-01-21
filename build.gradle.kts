@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.androidLibrary) apply false
 }
-true // Needed to make the Suppress annotation work for the plugins block
 
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")

@@ -1,7 +1,6 @@
 package com.vickbt.repository.di
 
 import android.content.Context
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.vickbt.repository.datasource.WeatherRepositoryImpl
 import com.vickbt.repository.utils.LocationService

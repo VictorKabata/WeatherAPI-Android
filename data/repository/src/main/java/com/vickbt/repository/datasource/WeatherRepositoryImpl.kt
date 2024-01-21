@@ -51,6 +51,5 @@ class WeatherRepositoryImpl(
                 endDate = endDate
             ).toDomain()
         }
-
     }
 }
