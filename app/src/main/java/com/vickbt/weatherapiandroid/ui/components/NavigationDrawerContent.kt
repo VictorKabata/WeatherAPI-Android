@@ -48,7 +48,7 @@ fun NavigationDrawerContent(
             OutlinedTextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 8.dp),
                 value = locationQuery,
                 onValueChange = { locationQueryChange(it) },
                 keyboardActions = KeyboardActions.Default,
@@ -56,7 +56,7 @@ fun NavigationDrawerContent(
                 maxLines = 1,
                 shape = RoundedCornerShape(2.dp),
                 placeholder = { Text(text = stringResource(R.string.enter_location)) },
-                leadingIcon = {
+                trailingIcon = {
                     IconButton(onClick = { onLocationQueried(locationQuery) }) {
                         Icon(imageVector = Icons.Rounded.LocationOn, contentDescription = "")
                     }
