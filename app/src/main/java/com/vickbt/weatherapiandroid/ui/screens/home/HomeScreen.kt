@@ -185,9 +185,7 @@ fun HomeScreen(
                 ) {
                     items(items = homeUiState.forecastWeather.forecast) {
                         DayCondition(
-                            modifier = Modifier
-                                .width(70.dp)
-                                .height(90.dp),
+                            modifier = Modifier.size(90.dp),
                             icon = R.drawable.weather_placeholder,
                             dayOfWeek = it.dateEpoch.dayOfWeek.toString().uppercase(),
                             minTemp = it.day.mintemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement),
@@ -209,7 +207,7 @@ fun HomeScreen(
                     items(items = homeUiState.historyWeather?.forecast?.reversed() ?: emptyList()) {
                         DayCondition(
                             modifier = Modifier
-                                .width(70.dp)
+                                .width(90.dp)
                                 .height(120.dp),
                             icon = R.drawable.weather_placeholder,
                             dayOfWeek = it.dateEpoch.dayOfWeek.toString().uppercase(),
