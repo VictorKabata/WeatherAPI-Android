@@ -10,4 +10,6 @@
 
     <string name="permission_request_message">Please authorize location permissions</string>
     <string name="request">Request</string>
+    <string name="enter_location">Enter location</string>
+    <string name="menu">Menu</string>
 </resources>

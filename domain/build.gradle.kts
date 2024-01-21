@@ -14,4 +14,5 @@ dependencies {
     api(libs.koin.core)
     api(libs.napier)
     api(libs.kotlinX.dateTime)
+    api(libs.multiplatformSettings)
 }
