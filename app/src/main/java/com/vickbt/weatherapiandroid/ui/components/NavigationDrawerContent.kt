@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.LocationOn
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
@@ -28,7 +32,7 @@ fun NavigationDrawerContent(
     modifier: Modifier,
     locationQuery: String,
     locationQueryChange: (String) -> Unit,
-    onLocationQueried: () -> Unit,
+    onLocationQueried: (String) -> Unit,
     isThemeCheckedOn: Boolean,
     onThemeCheckChanged: (Boolean) -> Unit,
     isImperialCheckedOn: Boolean,
@@ -51,7 +55,12 @@ fun NavigationDrawerContent(
                 singleLine = true,
                 maxLines = 1,
                 shape = RoundedCornerShape(2.dp),
-                placeholder = { Text(text = stringResource(R.string.enter_location)) }
+                placeholder = { Text(text = stringResource(R.string.enter_location)) },
+                leadingIcon = {
+                    IconButton(onClick = { onLocationQueried(locationQuery) }) {
+                        Icon(imageVector = Icons.Rounded.LocationOn, contentDescription = "")
+                    }
+                }
             )
 
             //endregion Theme option
@@ -59,14 +68,14 @@ fun NavigationDrawerContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(vertical = 8.dp,horizontal = 16.dp),
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = "Dark Theme",
                     fontWeight = FontWeight.Medium,
-                    fontSize = 18.sp,
+                    fontSize = 20.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
@@ -80,14 +89,14 @@ fun NavigationDrawerContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(vertical = 8.dp,horizontal = 16.dp),
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = "Imperial System",
                     fontWeight = FontWeight.Medium,
-                    fontSize = 18.sp,
+                    fontSize = 20.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
