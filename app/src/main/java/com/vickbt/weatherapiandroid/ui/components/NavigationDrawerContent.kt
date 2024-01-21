@@ -44,7 +44,6 @@ fun NavigationDrawerContent(
                 .fillMaxHeight()
                 .padding(vertical = 24.dp)
         ) {
-
             OutlinedTextField(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -103,7 +102,8 @@ fun NavigationDrawerContent(
 
                 Switch(
                     checked = isImperialCheckedOn,
-                    onCheckedChange = { onImperialCheckChanged(it) })
+                    onCheckedChange = { onImperialCheckChanged(it) }
+                )
             }
             //endregion
         }

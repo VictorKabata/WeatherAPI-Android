@@ -135,7 +135,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier,
                                 locationQuery = "",
                                 locationQueryChange = {},
-                                onLocationQueried = { /*TODO*/ },
+                                onLocationQueried = { },
                                 isThemeCheckedOn = false,
                                 onThemeCheckChanged = {},
                                 isImperialCheckedOn = false,
