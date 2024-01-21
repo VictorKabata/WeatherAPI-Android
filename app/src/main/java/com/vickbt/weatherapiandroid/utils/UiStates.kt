@@ -1,10 +1,11 @@
 package com.vickbt.weatherapiandroid.utils
 
-import com.vickbt.shared.domain.models.ForecastWeather
-import com.vickbt.shared.domain.models.HistoryForecast
+import com.vickbt.shared.domain.utils.MEASUREMENT_OPTIONS
+import com.vickbt.shared.domain.utils.THEME_OPTIONS
 
 data class MainUiStates(
-    val theme: Int = 0,
+    val theme: THEME_OPTIONS? = null,
+    val unitOfMeasurement: MEASUREMENT_OPTIONS? = null,
     val error: String? = null
 )
 

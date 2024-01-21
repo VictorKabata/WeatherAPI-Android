@@ -40,10 +40,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.compose.rememberNavController
+import com.vickbt.shared.domain.utils.MEASUREMENT_OPTIONS
 import com.vickbt.shared.domain.utils.THEME_OPTIONS
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.NavigationDrawerContent
 import com.vickbt.weatherapiandroid.ui.navigation.Navigation
+import com.vickbt.weatherapiandroid.ui.screens.home.HomeViewModel
 import com.vickbt.weatherapiandroid.ui.theme.WeatherAPIAndroidTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -59,7 +61,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             val mainViewModel = koinViewModel<MainViewModel>()
 
-            val themeOption = mainViewModel.themePreference.collectAsState().value
+            val mainUiState = mainViewModel.mainUiState.collectAsState().value
+
+            Log.e("VicKbt", "Main UI state: $mainUiState")
 
             var locationPermissionsGranted by remember {
                 mutableStateOf(
@@ -122,28 +126,32 @@ class MainActivity : ComponentActivity() {
             val snackbarHostState = remember { SnackbarHostState() }
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-            WeatherAPIAndroidTheme(darkTheme = themeOption == THEME_OPTIONS.DARK_THEME) {
+            WeatherAPIAndroidTheme(darkTheme = mainUiState?.theme == THEME_OPTIONS.DARK_THEME) {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
                     ModalNavigationDrawer(
                         drawerContent = {
-                            NavigationDrawerContent(modifier = Modifier,
-                                locationQuery = "",
-                                locationQueryChange = {},
-                                onLocationQueried = { },
-                                isDarkTheme = themeOption != THEME_OPTIONS.LIGHT_THEME,
+                            NavigationDrawerContent(
+                                modifier = Modifier,
+                                isDarkTheme = mainUiState?.theme != THEME_OPTIONS.LIGHT_THEME,
                                 onThemeCheckChanged = {
-                                    Log.e("VicKbt", "Theme option: ${themeOption?.name}")
-                                    Log.e("VicKbt", "Theme change: $it")
                                     mainViewModel.saveThemePreference(
                                         selection = if (it) THEME_OPTIONS.DARK_THEME.ordinal
                                         else THEME_OPTIONS.LIGHT_THEME.ordinal
                                     )
                                 },
-                                isImperial = false,
-                                onImperialCheckChanged = {})
-                        }, drawerState = drawerState
+                                isImperial = mainUiState?.unitOfMeasurement
+                                        != MEASUREMENT_OPTIONS.METRIC,
+                                onImperialCheckChanged = {
+                                    mainViewModel.saveMeasurementPreference(
+                                        selection = if (it) MEASUREMENT_OPTIONS.IMPERIAL.ordinal
+                                        else MEASUREMENT_OPTIONS.METRIC.ordinal
+                                    )
+                                }
+                            )
+                        },
+                        drawerState = drawerState
                     ) {
                         Scaffold(
                             modifier = Modifier.fillMaxSize(),
