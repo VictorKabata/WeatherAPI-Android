@@ -23,6 +23,24 @@ kotlin {
         }
     iosTarget("ios") {}
 
+    sourceSets {
+        sourceSets["commonMain"].dependencies {
+
+        }
+
+        sourceSets["commonTest"].dependencies {
+
+        }
+
+        sourceSets["androidMain"].dependencies {
+
+        }
+
+        sourceSets["androidUnitTest"].dependencies {
+
+        }
+    }
+
 }
 
 android {
