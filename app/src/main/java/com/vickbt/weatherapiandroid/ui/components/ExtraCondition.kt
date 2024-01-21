@@ -34,16 +34,16 @@ fun ExtraCondition(
     Card(
         modifier = modifier
             .width(80.dp)
-            .height(100.dp),
+            .height(90.dp),
         shape = RoundedCornerShape(4.dp)
     ) {
         Column(
             modifier = Modifier.padding(vertical = 16.dp, horizontal = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(1.dp)
+            verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             Image(
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(24.dp),
                 painter = rememberImagePainter(icon),
                 contentDescription = stringResource(id = title),
                 contentScale = ContentScale.Crop

@@ -146,14 +146,14 @@ fun HomeScreen(
                 ) {
                     item {
                         ExtraCondition(
-                            icon = R.drawable.weather_placeholder,
+                            icon = R.drawable.humidity_percentage,
                             title = R.string.humidity,
                             value = "${homeUiState.forecastWeather.current.humidity}%"
                         )
                     }
                     item {
                         ExtraCondition(
-                            icon = R.drawable.weather_placeholder,
+                            icon = R.drawable.thermometer,
                             title = R.string.feels_like,
                             value = homeUiState.forecastWeather.current.temp
                                 .toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement)
@@ -161,7 +161,7 @@ fun HomeScreen(
                     }
                     item {
                         ExtraCondition(
-                            icon = R.drawable.weather_placeholder,
+                            icon = R.drawable.wind,
                             title = R.string.wind,
                             value = homeUiState.forecastWeather.current.wind
                                 .toSpeedUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement)
@@ -169,7 +169,7 @@ fun HomeScreen(
                     }
                     item {
                         ExtraCondition(
-                            icon = R.drawable.weather_placeholder,
+                            icon = R.drawable.uv_index,
                             title = R.string.uv_index,
                             value = "${homeUiState.forecastWeather.current.uv}"
                         )
