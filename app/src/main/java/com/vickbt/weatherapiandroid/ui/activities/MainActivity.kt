@@ -151,7 +151,8 @@ class MainActivity : ComponentActivity() {
                                     IconButton(onClick = { scope.launch { drawerState.open() } }) {
                                         Icon(
                                             imageVector = Icons.Rounded.Menu,
-                                            contentDescription = getString(R.string.menu)
+                                            contentDescription = getString(R.string.menu),
+                                            tint = MaterialTheme.colorScheme.primary
                                         )
                                     }
                                 })
