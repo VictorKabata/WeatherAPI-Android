@@ -2,7 +2,6 @@ package com.vickbt.repository.mappers
 
 import com.vickbt.domain.models.Condition
 import com.vickbt.domain.models.Current
-import com.vickbt.domain.models.CurrentWeather
 import com.vickbt.domain.models.DayForecast
 import com.vickbt.domain.models.ForecastDay
 import com.vickbt.domain.models.ForecastWeather
@@ -11,7 +10,6 @@ import com.vickbt.domain.models.HourForecast
 import com.vickbt.domain.models.Location
 import com.vickbt.network.dtos.ConditionDto
 import com.vickbt.network.dtos.CurrentDto
-import com.vickbt.network.dtos.CurrentWeatherDto
 import com.vickbt.network.dtos.DayForecastDto
 import com.vickbt.network.dtos.ForecastDayDto
 import com.vickbt.network.dtos.ForecastWeatherDto
@@ -21,10 +19,6 @@ import com.vickbt.network.dtos.LocationDto
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-
-fun CurrentWeatherDto.toDomain(): CurrentWeather {
-    return CurrentWeather(current = this.current.toDomain(), location = this.location.toDomain())
-}
 
 fun CurrentDto.toDomain(): Current {
     return Current(

@@ -21,29 +21,33 @@ class HomeViewModel(private val weatherRepository: WeatherRepositoryImpl) :
     }
 
     init {
-        fetchForecastWeather("Nairobi")
-        fetchHistoryWeather(query = "Nairobi")
+        fetchForecastWeather()
+        fetchHistoryWeather()
     }
 
-    fun fetchForecastWeather(query: String) = viewModelScope.launch(coroutineExceptionHandler) {
-        weatherRepository.fetchForecastWeather(query = query).collect { result ->
-            result.onSuccess { forecastWeather ->
-                _homeUiState.update {
-                    it.copy(isLoading = false, forecastWeather = forecastWeather)
+    fun fetchForecastWeather(query: String? = null) =
+        viewModelScope.launch(coroutineExceptionHandler) {
+            weatherRepository.fetchForecastWeather(query = query).collect { result ->
+                result.onSuccess { forecastWeather ->
+                    _homeUiState.update {
+                        it.copy(isLoading = false, forecastWeather = forecastWeather)
+                    }
+                }.onFailure {
+                    _homeUiState.update { it.copy(isLoading = false, error = it.error) }
                 }
-            }.onFailure {
-                _homeUiState.update { it.copy(isLoading = false, error = it.error) }
             }
         }
-    }
 
-    fun fetchHistoryWeather(query: String) = viewModelScope.launch(coroutineExceptionHandler) {
-        weatherRepository.fetchHistoryWeather(query = query).collect { result ->
-            result.onSuccess { historyWeather ->
-                _homeUiState.update { it.copy(isLoading = false, historyWeather = historyWeather) }
-            }.onFailure {
-                _homeUiState.update { it.copy(isLoading = false, error = it.error) }
+    fun fetchHistoryWeather(query: String? = null) =
+        viewModelScope.launch(coroutineExceptionHandler) {
+            weatherRepository.fetchHistoryWeather(query = query).collect { result ->
+                result.onSuccess { historyWeather ->
+                    _homeUiState.update {
+                        it.copy(isLoading = false, historyWeather = historyWeather)
+                    }
+                }.onFailure {
+                    _homeUiState.update { it.copy(isLoading = false, error = it.error) }
+                }
             }
         }
-    }
 }

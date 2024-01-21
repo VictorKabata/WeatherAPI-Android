@@ -1,6 +1,5 @@
 package com.vickbt.network
 
-import com.vickbt.network.dtos.CurrentWeatherDto
 import com.vickbt.network.dtos.ForecastWeatherDto
 import com.vickbt.network.dtos.HistoryForecastDto
 import io.ktor.client.HttpClient
@@ -10,16 +9,6 @@ import io.ktor.client.request.parameter
 import kotlinx.datetime.LocalDateTime
 
 class WeatherApiService(private val weatherApiClient: HttpClient) {
-
-    suspend fun fetchCurrentWeather(
-        query: String,
-        language: String
-    ): CurrentWeatherDto {
-        return weatherApiClient.get("current.json") {
-            parameter("q", query)
-            parameter("lang", language)
-        }.body<CurrentWeatherDto>()
-    }
 
     suspend fun fetchForecastWeather(
         query: String,
