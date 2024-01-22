@@ -14,6 +14,7 @@ import com.vickbt.shared.domain.utils.MeasurementOptions
 import com.vickbt.shared.domain.utils.ThemeOptions
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
@@ -35,7 +36,7 @@ class WeatherRepository(
         query: String? = null,
         language: String = "en"
     ): Flow<Result<ForecastWeather>> {
-        val location = locationService.requestLocationUpdates().first()
+        val location = locationService.requestLocationUpdates().firstOrNull()
         val unitOfMeasurement = MeasurementOptions.entries[getMeasurementSettings().first()]
 
         return safeApiCall {
@@ -54,7 +55,7 @@ class WeatherRepository(
         endDate: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)
     ): Flow<Result<HistoryForecast>> {
         return safeApiCall {
-            val location = locationService.requestLocationUpdates().first()
+            val location = locationService.requestLocationUpdates().firstOrNull()
             val unitOfMeasurement = MeasurementOptions.entries[getMeasurementSettings().first()]
 
             weatherApiService.fetchHistoryWeather(

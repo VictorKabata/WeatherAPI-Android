@@ -47,6 +47,7 @@ kotlin {
         }
 
         sourceSets["androidUnitTest"].dependencies {
+            implementation(libs.mockk)
         }
     }
 }

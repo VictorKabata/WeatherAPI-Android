@@ -36,18 +36,20 @@ import java.io.File
 
 internal class MockWeatherApiClient {
 
+    val forecastSuccessResponseJson =
+        File("src/androidUnitTest/resources/forecast_success.json").readText()
+    val historySuccessResponseJson =
+        File("src/androidUnitTest/resources/history_success.json").readText()
+    val clientErrorResponseJson =
+        File("src/androidUnitTest/resources/400_error.json").readText()
+    private val responseHeaders = headersOf(HttpHeaders.ContentType, "application/json")
+
     private var httpStatusCode: HttpStatusCode = HttpStatusCode.OK
     private var responseContent: String? = null
     fun throwError(httpStatus: HttpStatusCode, response: String) {
         httpStatusCode = httpStatus
         responseContent = response
     }
-
-    val forecastSuccessResponseJson =
-        File("src/commonTest/resources/forecast_success.json").readText()
-    val historySuccessResponseJson =
-        File("src/commonTest/resources/history_success.json").readText()
-    private val responseHeaders = headersOf(HttpHeaders.ContentType, "application/json")
 
     val weatherApiClient = HttpClient(MockEngine) {
         println(forecastSuccessResponseJson)
