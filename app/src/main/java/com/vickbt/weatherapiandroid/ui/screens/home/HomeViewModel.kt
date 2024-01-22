@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val weatherRepository: WeatherRepository) :
     ViewModel() {
 
-    private val _homeUiState = MutableStateFlow(HomeUiStates(isLoading = true))
+    val _homeUiState = MutableStateFlow(HomeUiStates(isLoading = true))
     val homeUiState = _homeUiState.asStateFlow()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
