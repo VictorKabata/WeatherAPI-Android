@@ -39,7 +39,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.compose.rememberNavController
-import com.vickbt.shared.domain.utils.MeasurementOptions
 import com.vickbt.shared.domain.utils.ThemeOptions
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.NavigationDrawerContent
@@ -143,17 +142,6 @@ class MainActivity : ComponentActivity() {
                                             ThemeOptions.DARK_THEME.ordinal
                                         } else {
                                             ThemeOptions.LIGHT_THEME.ordinal
-                                        }
-                                    )
-                                },
-                                isImperial = mainUiState.unitOfMeasurement
-                                        != MeasurementOptions.METRIC,
-                                onImperialCheckChanged = {
-                                    mainViewModel.saveMeasurementPreference(
-                                        selection = if (it) {
-                                            MeasurementOptions.IMPERIAL.ordinal
-                                        } else {
-                                            MeasurementOptions.METRIC.ordinal
                                         }
                                     )
                                 }
