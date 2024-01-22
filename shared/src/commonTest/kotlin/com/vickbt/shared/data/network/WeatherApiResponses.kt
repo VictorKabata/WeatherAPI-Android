@@ -2,7 +2,7 @@ package com.vickbt.shared.data.network
 
 import com.vickbt.shared.data.network.models.LocationDto
 
-const val Forecast200ResponseJson = """
+/*const val Forecast200ResponseJson = """
     {
     "location": {
         "name": "Nairobi",
@@ -11085,4 +11085,4 @@ val HistoryLocation = LocationDto(
     tzId = "Africa/Nairobi",
     localtimeEpoch = 1705916247,
     localtime = "2024-01-22 12:37"
-)
+)*/

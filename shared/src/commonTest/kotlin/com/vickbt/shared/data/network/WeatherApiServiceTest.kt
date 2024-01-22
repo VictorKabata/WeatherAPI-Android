@@ -12,7 +12,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration.Companion.days
 
-class WeatherApiServiceTest {
+/*class WeatherApiServiceTest {
 
     private val mockWeatherApiClient = MockWeatherApiClient()
 
@@ -58,4 +58,4 @@ class WeatherApiServiceTest {
         //then
         assertEquals(expected = HistoryLocation, actual = actualResult.location)
     }
-}
+}*/

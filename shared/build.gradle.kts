@@ -37,6 +37,8 @@ kotlin {
             implementation(libs.kotlinX.coroutines.test)
             implementation(libs.mockative)
             implementation(libs.ktor.mock)
+
+            implementation(libs.konveyor)
         }
 
         sourceSets["androidMain"].dependencies {

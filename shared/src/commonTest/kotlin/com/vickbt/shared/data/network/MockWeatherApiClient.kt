@@ -34,7 +34,7 @@ import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-internal class MockWeatherApiClient {
+/*internal class MockWeatherApiClient {
 
     private var httpStatusCode: HttpStatusCode = HttpStatusCode.OK
     private var responseContent: String? = null
@@ -96,4 +96,4 @@ internal class MockWeatherApiClient {
             }
         }
     }
-}
+}*/
