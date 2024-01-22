@@ -31,7 +31,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,10 +64,15 @@ fun HomeScreen(
             .padding(horizontal = 12.dp, vertical = 8.dp)
     ) {
         if (homeUiState.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .testTag("loading_progress_bar")
+                    .align(Alignment.Center)
+            )
         } else if (homeUiState.forecastWeather != null) {
             Column(
                 modifier = Modifier
+                    .testTag("weather_info_column")
                     .fillMaxSize()
                     .padding(paddingValues)
                     .align(Alignment.Center)
@@ -84,6 +91,7 @@ fun HomeScreen(
                     )
                 ) {
                     Text(
+                        modifier = Modifier.testTag("location_text"),
                         text = "${homeUiState.forecastWeather.location.name}," +
                                 " ${homeUiState.forecastWeather.location.country}",
                         fontWeight = FontWeight.Black,
@@ -93,6 +101,7 @@ fun HomeScreen(
                     )
 
                     Text(
+                        modifier = Modifier.testTag("date_text"),
                         text = homeUiState.forecastWeather.location.localtime.toReadableFormat(),
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 20.sp,
@@ -223,12 +232,15 @@ fun HomeScreen(
                 //endregion
             }
         } else if (homeUiState.error != null) {
-            // ToDo: Display error
-            val context = LocalContext.current
-
-            LaunchedEffect(key1 = Unit) {
-                Toast.makeText(context, "Error: ${homeUiState.error}", Toast.LENGTH_LONG).show()
-            }
+            Text(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(horizontal = 24.dp),
+                text = homeUiState.error,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Medium,
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
