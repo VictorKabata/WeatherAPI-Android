@@ -36,13 +36,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
+import com.vickbt.shared.domain.utils.toImageFormat
 import com.vickbt.shared.domain.utils.toReadableFormat
+import com.vickbt.shared.domain.utils.toSpeedUnitOfMeasurement
+import com.vickbt.shared.domain.utils.toTempUnitOfMeasurement
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.DayCondition
 import com.vickbt.weatherapiandroid.ui.components.ExtraCondition
-import com.vickbt.weatherapiandroid.utils.toImageFormat
-import com.vickbt.weatherapiandroid.utils.toSpeedUnitOfMeasurement
-import com.vickbt.weatherapiandroid.utils.toTempUnitOfMeasurement
 import org.koin.compose.koinInject
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

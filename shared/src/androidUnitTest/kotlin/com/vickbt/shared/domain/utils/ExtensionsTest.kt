@@ -31,4 +31,34 @@ class ExtensionsTest {
         assertEquals(expected = expectedResult, actual = result.capitalizeEachWord())
     }
 
+    @Test
+    fun `toTempUnitOfMeasurement appends degree celsius when using metric system`() = runTest {
+        val result = 24.8.toTempUnitOfMeasurement(unitOfMeasurement = MeasurementOptions.METRIC)
+
+        assertEquals(expected = "24°C", actual = result)
+    }
+
+    @Test
+    fun `toTempUnitOfMeasurement appends degree fahrenheit when using imperial system`() = runTest {
+        val result = 24.8.toTempUnitOfMeasurement(unitOfMeasurement = MeasurementOptions.IMPERIAL)
+
+        assertEquals(expected = "24°F", actual = result)
+    }
+
+    @Test
+    fun `toSpeedUnitOfMeasurement appends kilometer per hour when using metric system`() = runTest {
+        val result = 80.4.toSpeedUnitOfMeasurement(unitOfMeasurement = MeasurementOptions.METRIC)
+
+        assertEquals(expected = "80 km/h", actual = result)
+    }
+
+    @Test
+    fun `toSpeedUnitOfMeasurement appends miles per hour when using imperial system`() =
+        runTest {
+            val result =
+                80.4.toSpeedUnitOfMeasurement(unitOfMeasurement = MeasurementOptions.IMPERIAL)
+
+            assertEquals(expected = "80 m/h", actual = result)
+        }
+
 }

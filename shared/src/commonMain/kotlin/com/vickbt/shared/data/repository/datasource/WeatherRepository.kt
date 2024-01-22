@@ -29,8 +29,6 @@ class WeatherRepository(
     private val locationService: LocationService
 ) {
 
-    private val timeZone = TimeZone.currentSystemDefault()
-
     /**Return weather forecast for the next 7 days/ 1 week and maps the network response to domain classes*/
     suspend fun fetchForecastWeather(
         query: String? = null,
@@ -51,8 +49,9 @@ class WeatherRepository(
     suspend fun fetchHistoryWeather(
         query: String? = null,
         language: String = "en",
-        startDate: LocalDateTime = Clock.System.now().minus(14.days).toLocalDateTime(timeZone),
-        endDate: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)
+        startDate: LocalDateTime = Clock.System.now().minus(14.days)
+            .toLocalDateTime(TimeZone.currentSystemDefault()),
+        endDate: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
     ): Flow<Result<HistoryForecast>> {
         return safeApiCall {
             val location = locationService.requestLocationUpdates().firstOrNull()
