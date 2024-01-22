@@ -16,10 +16,6 @@
 
 package com.vickbt.shared.data.network
 
-import com.vickbt.darajakmp.network.models.AccessToken200JSON
-import com.vickbt.darajakmp.network.models.MpesaExpress200JSON
-import com.vickbt.darajakmp.network.models.QueryTransaction200JSON
-import com.vickbt.darajakmp.utils.DarajaEndpoints
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -61,6 +57,7 @@ internal class MockWeatherApiClient {
                             responseHeaders
                         )
                     }
+
                     "history.json" -> {
                         respond(
                             responseContent ?: History200ResponseJson,
@@ -68,6 +65,7 @@ internal class MockWeatherApiClient {
                             responseHeaders
                         )
                     }
+
                     else -> {
                         error("Unhandled ${request.url.encodedPathAndQuery}")
                     }
