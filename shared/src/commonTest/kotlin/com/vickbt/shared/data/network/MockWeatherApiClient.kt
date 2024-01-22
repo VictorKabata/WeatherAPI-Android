@@ -29,12 +29,12 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import io.ktor.http.fullPath
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import java.io.File
 
-/*internal class MockWeatherApiClient {
+internal class MockWeatherApiClient {
 
     private var httpStatusCode: HttpStatusCode = HttpStatusCode.OK
     private var responseContent: String? = null
@@ -43,16 +43,21 @@ import kotlinx.serialization.json.Json
         responseContent = response
     }
 
+    val forecastSuccessResponseJson =
+        File("src/commonTest/resources/forecast_success.json").readText()
+    val historySuccessResponseJson =
+        File("src/commonTest/resources/history_success.json").readText()
     private val responseHeaders = headersOf(HttpHeaders.ContentType, "application/json")
 
     val weatherApiClient = HttpClient(MockEngine) {
+        println(forecastSuccessResponseJson)
+
         engine {
             addHandler { request ->
-                println("URL: ${request.url}")
-                when (request.url.fullPath) {
+                when (request.url.pathSegments.first()) {
                     "forecast.json" -> {
                         respond(
-                            responseContent ?: Forecast200ResponseJson,
+                            responseContent ?: forecastSuccessResponseJson,
                             httpStatusCode,
                             responseHeaders
                         )
@@ -60,7 +65,7 @@ import kotlinx.serialization.json.Json
 
                     "history.json" -> {
                         respond(
-                            responseContent ?: History200ResponseJson,
+                            responseContent ?: historySuccessResponseJson,
                             httpStatusCode,
                             responseHeaders
                         )
@@ -96,4 +101,4 @@ import kotlinx.serialization.json.Json
             }
         }
     }
-}*/
+}

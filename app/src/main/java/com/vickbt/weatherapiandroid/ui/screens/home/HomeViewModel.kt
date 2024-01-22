@@ -2,7 +2,7 @@ package com.vickbt.weatherapiandroid.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vickbt.shared.data.repository.datasource.WeatherRepositoryImpl
+import com.vickbt.shared.data.repository.datasource.WeatherRepository
 import com.vickbt.shared.domain.utils.MeasurementOptions
 import com.vickbt.weatherapiandroid.utils.HomeUiStates
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val weatherRepository: WeatherRepositoryImpl) :
+class HomeViewModel(private val weatherRepository: WeatherRepository) :
     ViewModel() {
 
     private val _homeUiState = MutableStateFlow(HomeUiStates(isLoading = true))

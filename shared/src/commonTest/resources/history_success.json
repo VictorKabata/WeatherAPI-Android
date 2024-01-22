@@ -1,64 +1,4 @@
-package com.vickbt.shared.data.network
-
-import com.vickbt.shared.data.network.models.LocationDto
-
-/*const val Forecast200ResponseJson = """
-    {
-    "location": {
-        "name": "Nairobi",
-        "region": "Nairobi Area",
-        "country": "Kenya",
-        "lat": -1.28,
-        "lon": 36.82,
-        "tz_id": "Africa/Nairobi",
-        "localtime_epoch": 1705583954,
-        "localtime": "2024-01-18 16:19"
-    },
-    "current": {
-        "last_updated_epoch": 1705583700,
-        "last_updated": "2024-01-18 16:15",
-        "temp_c": 23.0,
-        "temp_f": 73.4,
-        "is_day": 1,
-        "condition": {
-            "text": "Partly cloudy",
-            "icon": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-            "code": 1003
-        },
-        "wind_mph": 23.0,
-        "wind_kph": 37.1,
-        "wind_degree": 300,
-        "wind_dir": "WNW",
-        "pressure_mb": 1021.0,
-        "pressure_in": 30.15,
-        "precip_mm": 0.93,
-        "precip_in": 0.04,
-        "humidity": 57,
-        "cloud": 75,
-        "feelslike_c": 25.0,
-        "feelslike_f": 77.0,
-        "vis_km": 10.0,
-        "vis_miles": 6.0,
-        "uv": 8.0,
-        "gust_mph": 27.5,
-        "gust_kph": 44.3
-    }
-}
-"""
-
-val ForecastLocation = LocationDto(
-    name = "Nairobi",
-    region = "Nairobi, Area",
-    country = "Kenya",
-    lat = -1.28,
-    lon = 36.82,
-    tzId = "Africa/Nairobi",
-    localtimeEpoch = 1705583954,
-    localtime = "2024-01-18 16:19"
-)
-
-const val History200ResponseJson = """
-    {
+{
   "location": {
     "name": "Nairobi",
     "region": "Nairobi Area",
@@ -66,8 +6,8 @@ const val History200ResponseJson = """
     "lat": -1.28,
     "lon": 36.82,
     "tz_id": "Africa/Nairobi",
-    "localtime_epoch": 1705916247,
-    "localtime": "2024-01-22 12:37"
+    "localtime_epoch": 1705925879,
+    "localtime": "2024-01-22 15:17"
   },
   "forecast": {
     "forecastday": [
@@ -11074,15 +11014,3 @@ const val History200ResponseJson = """
     ]
   }
 }
-"""
-
-val HistoryLocation = LocationDto(
-    name = "Nairobi",
-    region = "Nairobi, Area",
-    country = "Kenya",
-    lat = -1.28,
-    lon = 36.82,
-    tzId = "Africa/Nairobi",
-    localtimeEpoch = 1705916247,
-    localtime = "2024-01-22 12:37"
-)*/

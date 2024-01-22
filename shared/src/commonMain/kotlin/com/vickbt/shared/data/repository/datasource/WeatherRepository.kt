@@ -6,6 +6,8 @@ import com.russhwolf.settings.coroutines.getIntFlow
 import com.vickbt.shared.data.network.WeatherApiService
 import com.vickbt.shared.data.network.utils.safeApiCall
 import com.vickbt.shared.data.repository.mappers.toDomain
+import com.vickbt.shared.domain.models.ForecastWeather
+import com.vickbt.shared.domain.models.HistoryForecast
 import com.vickbt.shared.domain.utils.Constants.MEASUREMENT_KEY
 import com.vickbt.shared.domain.utils.Constants.THEME_KEY
 import com.vickbt.shared.domain.utils.MeasurementOptions
@@ -20,7 +22,7 @@ import utils.LocationService
 import kotlin.time.Duration.Companion.days
 
 @OptIn(ExperimentalSettingsApi::class)
-class WeatherRepositoryImpl(
+class WeatherRepository(
     private val weatherApiService: WeatherApiService,
     private val observableSettings: ObservableSettings,
     private val locationService: LocationService
@@ -32,7 +34,7 @@ class WeatherRepositoryImpl(
     suspend fun fetchForecastWeather(
         query: String? = null,
         language: String = "en"
-    ): Flow<Result<com.vickbt.shared.domain.models.ForecastWeather>> {
+    ): Flow<Result<ForecastWeather>> {
         val location = locationService.requestLocationUpdates().first()
         val unitOfMeasurement = MeasurementOptions.entries[getMeasurementSettings().first()]
 
@@ -50,7 +52,7 @@ class WeatherRepositoryImpl(
         language: String = "en",
         startDate: LocalDateTime = Clock.System.now().minus(14.days).toLocalDateTime(timeZone),
         endDate: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)
-    ): Flow<Result<com.vickbt.shared.domain.models.HistoryForecast>> {
+    ): Flow<Result<HistoryForecast>> {
         return safeApiCall {
             val location = locationService.requestLocationUpdates().first()
             val unitOfMeasurement = MeasurementOptions.entries[getMeasurementSettings().first()]

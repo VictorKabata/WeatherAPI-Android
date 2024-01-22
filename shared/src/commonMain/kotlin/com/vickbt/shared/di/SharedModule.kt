@@ -2,10 +2,8 @@ package com.vickbt.shared.di
 
 import android.content.Context
 import com.google.android.gms.location.LocationServices
-import com.vickbt.shared.data.cache.MultiplatformSettingsWrapper
-import com.vickbt.shared.data.network.WeatherApiClient
 import com.vickbt.shared.data.network.WeatherApiService
-import com.vickbt.shared.data.repository.datasource.WeatherRepositoryImpl
+import com.vickbt.shared.data.repository.datasource.WeatherRepository
 import io.github.aakira.napier.BuildConfig
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
@@ -23,7 +21,7 @@ val sharedModule: Module = module {
     /**Create a singleton of Observable Settings*/
     single { com.vickbt.shared.data.cache.MultiplatformSettingsWrapper.createSettings(context = get<Context>()) }
 
-    singleOf(::WeatherRepositoryImpl)
+    singleOf(::WeatherRepository)
 
     /**Creates a fused location client used to create an instance of [LocationServices]*/
     single {

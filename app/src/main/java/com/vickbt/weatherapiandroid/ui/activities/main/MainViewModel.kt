@@ -2,7 +2,7 @@ package com.vickbt.weatherapiandroid.ui.activities.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vickbt.shared.data.repository.datasource.WeatherRepositoryImpl
+import com.vickbt.shared.data.repository.datasource.WeatherRepository
 import com.vickbt.shared.domain.utils.Constants.THEME_KEY
 import com.vickbt.shared.domain.utils.ThemeOptions
 import com.vickbt.weatherapiandroid.utils.MainUiStates
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val weatherRepository: WeatherRepositoryImpl) :
+class MainViewModel(private val weatherRepository: WeatherRepository) :
     ViewModel() {
 
     private val _mainUiState = MutableStateFlow(MainUiStates())
