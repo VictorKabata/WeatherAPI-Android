@@ -35,6 +35,7 @@ truth = "1.1.3"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
+mockative = "2.0.1"
 
 [plugins]
 ktLint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
@@ -89,6 +90,9 @@ multiplatformSettings-coroutines = { module = "com.russhwolf:multiplatform-setti
 
 # Test libs
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+kotlinX-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+mockative={module="io.mockative:mockative", version.ref="mockative"}
+ktor-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
