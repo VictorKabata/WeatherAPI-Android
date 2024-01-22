@@ -1,6 +1,5 @@
 package com.vickbt.weatherapiandroid.ui.components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +26,7 @@ import coil.compose.rememberImagePainter
 @Composable
 fun DayCondition(
     modifier: Modifier,
-    @DrawableRes icon: Int,
+    imageUrl: String,
     dayOfWeek: String,
     dateOfMonth: String? = null,
     minTemp: String,
@@ -61,7 +60,7 @@ fun DayCondition(
 
             Image(
                 modifier = Modifier.size(32.dp),
-                painter = rememberImagePainter(icon),
+                painter = rememberImagePainter(imageUrl),
                 contentDescription = "",
                 contentScale = ContentScale.Crop
             )

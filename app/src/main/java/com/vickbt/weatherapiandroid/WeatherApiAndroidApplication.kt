@@ -1,8 +1,7 @@
 package com.vickbt.weatherapiandroid
 
 import android.app.Application
-import com.vickbt.network.di.networkModule
-import com.vickbt.repository.di.repositoryModule
+import com.vickbt.shared.di.sharedModule
 import com.vickbt.weatherapiandroid.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -14,7 +13,7 @@ class WeatherApiAndroidApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        val modules = listOf(networkModule, repositoryModule, appModule)
+        val modules = listOf(sharedModule, appModule)
         startKoin {
             androidLogger(level = Level.DEBUG)
             androidContext(this@WeatherApiAndroidApplication)

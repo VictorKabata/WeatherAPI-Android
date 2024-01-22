@@ -24,6 +24,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -32,23 +35,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.vickbt.domain.utils.toReadableFormat
+import com.vickbt.shared.domain.utils.toReadableFormat
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.DayCondition
 import com.vickbt.weatherapiandroid.ui.components.ExtraCondition
+import com.vickbt.weatherapiandroid.utils.toImageFormat
+import com.vickbt.weatherapiandroid.utils.toSpeedUnitOfMeasurement
+import com.vickbt.weatherapiandroid.utils.toTempUnitOfMeasurement
 import org.koin.compose.koinInject
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
-    navController: NavController,
     paddingValues: PaddingValues,
     viewModel: HomeViewModel = koinInject()
 ) {
     val homeUiState = viewModel.homeUiState.collectAsState().value
     val scrollState = rememberScrollState()
+
+    val unitOfMeasurement by remember { mutableStateOf(homeUiState.unitOfMeasurement) }
 
     Box(
         modifier = Modifier
@@ -104,14 +110,17 @@ fun HomeScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
-                        modifier = Modifier.size(120.dp),
-                        painter = rememberImagePainter(R.drawable.weather_placeholder),
+                        modifier = Modifier.size(150.dp),
+                        painter = rememberImagePainter(
+                            homeUiState.forecastWeather.current.condition.icon.toImageFormat()
+                        ),
                         contentDescription = homeUiState.forecastWeather.current.condition.text,
                         contentScale = ContentScale.Crop
                     )
 
                     Text(
-                        text = homeUiState.forecastWeather.current.tempC.toInt().toString(),
+                        text = homeUiState.forecastWeather.current.temp
+                            .toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement),
                         fontSize = 80.sp,
                         fontWeight = FontWeight.ExtraBold,
                         maxLines = 1
@@ -137,28 +146,30 @@ fun HomeScreen(
                 ) {
                     item {
                         ExtraCondition(
-                            icon = R.drawable.weather_placeholder,
+                            icon = R.drawable.humidity_percentage,
                             title = R.string.humidity,
                             value = "${homeUiState.forecastWeather.current.humidity}%"
                         )
                     }
                     item {
                         ExtraCondition(
-                            icon = R.drawable.weather_placeholder,
+                            icon = R.drawable.thermometer,
                             title = R.string.feels_like,
-                            value = "${homeUiState.forecastWeather.current.tempC}"
+                            value = homeUiState.forecastWeather.current.temp
+                                .toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement)
                         )
                     }
                     item {
                         ExtraCondition(
-                            icon = R.drawable.weather_placeholder,
+                            icon = R.drawable.wind,
                             title = R.string.wind,
-                            value = "${homeUiState.forecastWeather.current.windKph}km/h"
+                            value = homeUiState.forecastWeather.current.wind
+                                .toSpeedUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement)
                         )
                     }
                     item {
                         ExtraCondition(
-                            icon = R.drawable.weather_placeholder,
+                            icon = R.drawable.uv_index,
                             title = R.string.uv_index,
                             value = "${homeUiState.forecastWeather.current.uv}"
                         )
@@ -177,13 +188,11 @@ fun HomeScreen(
                 ) {
                     items(items = homeUiState.forecastWeather.forecast) {
                         DayCondition(
-                            modifier = Modifier
-                                .width(70.dp)
-                                .height(90.dp),
-                            icon = R.drawable.weather_placeholder,
+                            modifier = Modifier.size(90.dp),
+                            imageUrl = it.day.condition.icon.toImageFormat(),
                             dayOfWeek = it.dateEpoch.dayOfWeek.toString().uppercase(),
-                            minTemp = it.day.mintempC.toInt().toString(),
-                            maxTemp = it.day.maxtempC.toInt().toString()
+                            minTemp = it.day.mintemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement),
+                            maxTemp = it.day.maxtemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement)
                         )
                     }
                 }
@@ -201,13 +210,13 @@ fun HomeScreen(
                     items(items = homeUiState.historyWeather?.forecast?.reversed() ?: emptyList()) {
                         DayCondition(
                             modifier = Modifier
-                                .width(70.dp)
+                                .width(90.dp)
                                 .height(120.dp),
-                            icon = R.drawable.weather_placeholder,
+                            imageUrl = it.day.condition.icon.toImageFormat(),
                             dayOfWeek = it.dateEpoch.dayOfWeek.toString().uppercase(),
                             dateOfMonth = it.dateEpoch.dayOfMonth.toString(),
-                            minTemp = it.day.mintempC.toInt().toString(),
-                            maxTemp = it.day.maxtempC.toInt().toString()
+                            minTemp = it.day.mintemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement),
+                            maxTemp = it.day.maxtemp.toTempUnitOfMeasurement(unitOfMeasurement = unitOfMeasurement)
                         )
                     }
                 }
