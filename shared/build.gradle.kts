@@ -1,5 +1,4 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 
 
