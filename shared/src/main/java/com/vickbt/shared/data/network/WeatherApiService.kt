@@ -8,8 +8,10 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import kotlinx.datetime.LocalDateTime
 
+/**Weather API*/
 class WeatherApiService(private val weatherApiClient: HttpClient) {
 
+    /**Return weather forecast for the next 7 days/ 1 week*/
     suspend fun fetchForecastWeather(
         query: String,
         language: String
@@ -21,6 +23,7 @@ class WeatherApiService(private val weatherApiClient: HttpClient) {
         }.body<ForecastWeatherDto>()
     }
 
+    /**Returns weather forecast for the past 2 weeks/ 14 days*/
     suspend fun fetchHistoryWeather(
         query: String,
         language: String,

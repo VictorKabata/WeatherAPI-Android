@@ -28,6 +28,7 @@ class WeatherRepositoryImpl(
 
     private val timeZone = TimeZone.currentSystemDefault()
 
+    /**Return weather forecast for the next 7 days/ 1 week and maps the network response to domain classes*/
     suspend fun fetchForecastWeather(
         query: String? = null,
         language: String = "en"
@@ -43,6 +44,7 @@ class WeatherRepositoryImpl(
         }
     }
 
+    /**Returns weather forecast for the past 2 weeks/ 14 days and maps the network response to domain class*/
     suspend fun fetchHistoryWeather(
         query: String? = null,
         language: String = "en",
@@ -62,10 +64,12 @@ class WeatherRepositoryImpl(
         }
     }
 
+    /**Save setting option to key-value cache*/
     suspend fun saveSettings(key: String, selection: Int) {
         observableSettings.putInt(key = key, value = selection)
     }
 
+    /**Get theme preference from key-value cache*/
     suspend fun getThemeSettings(): Flow<Int> {
         return observableSettings.getIntFlow(
             key = THEME_KEY,
@@ -73,6 +77,7 @@ class WeatherRepositoryImpl(
         )
     }
 
+    /**Get unit of measurement preference from key-value cache*/
     suspend fun getMeasurementSettings(): Flow<Int> {
         return observableSettings.getIntFlow(
             key = MEASUREMENT_KEY,

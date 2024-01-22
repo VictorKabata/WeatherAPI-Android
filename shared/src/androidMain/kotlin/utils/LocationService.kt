@@ -18,11 +18,13 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
+/**Util class to */
 class LocationService(
     private val context: Context,
     private val locationClient: FusedLocationProviderClient
 ) {
 
+    /**Returns user's current latitude and longitude*/
     @SuppressLint("MissingPermission")
     fun requestLocationUpdates(): Flow<LatLng?> = callbackFlow {
         if (!context.areLocationPermissionsAlreadyGranted()) {
@@ -53,12 +55,9 @@ class LocationService(
             locationClient.removeLocationUpdates(locationCallback)
         }
     }
-
-    fun requestCurrentLocation(): Flow<LatLng?> {
-        TODO("Not yet implemented")
-    }
 }
 
+/**Checks if location permissions have already been granted*/
 fun Context.areLocationPermissionsAlreadyGranted(): Boolean {
     return ContextCompat.checkSelfPermission(
         this,
@@ -69,6 +68,7 @@ fun Context.areLocationPermissionsAlreadyGranted(): Boolean {
     ) == PackageManager.PERMISSION_GRANTED
 }
 
+/**Opens application permission settings to request user to manually toggle location permission on*/
 fun Context.openApplicationSettings() {
     Intent(
         Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
@@ -78,6 +78,7 @@ fun Context.openApplicationSettings() {
     }
 }
 
+/**Checks if permission has been granted or rejected/denied*/
 fun decideCurrentPermissionStatus(
     locationPermissionsGranted: Boolean,
     shouldShowPermissionRationale: Boolean

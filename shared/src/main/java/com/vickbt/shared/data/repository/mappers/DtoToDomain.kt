@@ -21,6 +21,8 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
+/**This file contain data transformation functions to convert DTO classes to custom domain classes*/
+
 fun CurrentDto.toDomain(unitOfMeasurement: MeasurementOptions): Current {
     return Current(
         condition = this.condition.toDomain(),
