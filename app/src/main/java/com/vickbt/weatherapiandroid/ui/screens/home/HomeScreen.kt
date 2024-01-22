@@ -213,7 +213,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    items(items = homeUiState.historyWeather?.forecast?.reversed() ?: emptyList()) {
+                    items(items = homeUiState.historyWeather?.forecast ?: emptyList()) {
                         DayCondition(
                             modifier = Modifier
                                 .width(90.dp)
