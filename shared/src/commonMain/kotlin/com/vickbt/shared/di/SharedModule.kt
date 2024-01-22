@@ -15,13 +15,13 @@ import utils.LocationService
 val sharedModule: Module = module {
 
     /**Create a singleton instance of ktor client*/
-    single { WeatherApiClient.createWeatherApiClient(enableNetworkLogs = BuildConfig.DEBUG) }
+    single { com.vickbt.shared.data.network.WeatherApiClient.createWeatherApiClient(enableNetworkLogs = BuildConfig.DEBUG) }
 
     /**Create a singleton of [WeatherApiService]*/
     singleOf(::WeatherApiService)
 
     /**Create a singleton of Observable Settings*/
-    single { MultiplatformSettingsWrapper.createSettings(context = get<Context>()) }
+    single { com.vickbt.shared.data.cache.MultiplatformSettingsWrapper.createSettings(context = get<Context>()) }
 
     singleOf(::WeatherRepositoryImpl)
 
