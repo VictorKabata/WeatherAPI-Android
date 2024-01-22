@@ -5,7 +5,9 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import com.vickbt.shared.data.repository.datasource.WeatherRepository
+import com.vickbt.shared.domain.models.ApiError
 import com.vickbt.weatherapiandroid.ui.theme.WeatherAPIAndroidTheme
 import com.vickbt.weatherapiandroid.utils.HomeUiStates
 import io.mockk.clearAllMocks
@@ -47,6 +49,9 @@ class HomeScreenTest {
             }
         }
         composeTestRule.onNodeWithTag("loading_progress_bar").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("weather_info_column").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("error_text").assertDoesNotExist()
+
     }
 
     @Test
@@ -59,6 +64,28 @@ class HomeScreenTest {
             }
         }
         composeTestRule.onNodeWithTag("loading_progress_bar").assertDoesNotExist()
+    }
+
+    @Test
+    fun when_homeUiState_error_is_not_null_error_text_is_displayed() {
+        // Given
+        coEvery { weatherRepository.fetchForecastWeather() } throws ApiError(
+            code = 0, error = "Unknown error has occurred"
+        )
+
+        // When
+        homeViewModel.fetchForecastWeather()
+
+        composeTestRule.setContent {
+            WeatherAPIAndroidTheme {
+                HomeScreen(paddingValues = PaddingValues(), viewModel = homeViewModel)
+            }
+        }
+        composeTestRule.onNodeWithTag("loading_progress_bar").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("weather_info_column").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("error_text").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Unknown error has occurred").assertExists()
+
     }
 
 }

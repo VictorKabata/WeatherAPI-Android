@@ -234,6 +234,7 @@ fun HomeScreen(
         } else if (homeUiState.error != null) {
             Text(
                 modifier = Modifier
+                    .testTag("error_text")
                     .align(Alignment.Center)
                     .padding(horizontal = 24.dp),
                 text = homeUiState.error,
