@@ -19,10 +19,12 @@ import kotlinx.serialization.json.Json
 
 internal object WeatherApiClient {
 
+    /**Create custom instance of [HttpClient] used to authenticate, log and format REST network requests*/
     fun createWeatherApiClient(enableNetworkLogs: Boolean = false) = HttpClient {
         expectSuccess = true
         addDefaultResponseValidation()
 
+        // Append api key on all requests
         defaultRequest {
             url {
                 protocol = URLProtocol.HTTPS
@@ -35,6 +37,7 @@ internal object WeatherApiClient {
             }
         }
 
+        // Enable logging network requests if app is debug variant
         if (enableNetworkLogs) {
             install(Logging) {
                 level = LogLevel.HEADERS

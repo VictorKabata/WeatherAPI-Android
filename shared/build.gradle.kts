@@ -4,7 +4,6 @@ import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 
 plugins {
     alias(libs.plugins.multiplatform)
-    // alias(libs.plugins.nativeCocoapod)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlinX.serialization)
     alias(libs.plugins.buildKonfig)
@@ -17,20 +16,20 @@ kotlin {
 
     sourceSets {
         sourceSets["commonMain"].dependencies {
-            api(libs.ktor.core)
-            api(libs.ktor.cio)
-            api(libs.ktor.contentNegotiation)
-            api(libs.ktor.serialization)
-            api(libs.ktor.json)
-            api(libs.ktor.logging)
+            implementation(libs.ktor.core)
+            implementation(libs.ktor.cio)
+            implementation(libs.ktor.contentNegotiation)
+            implementation(libs.ktor.serialization)
+            implementation(libs.ktor.json)
+            implementation(libs.ktor.logging)
 
             api(libs.coroutines.core)
             api(libs.koin.core)
             api(libs.napier)
             api(libs.kotlinX.dateTime)
 
-            api(libs.multiplatformSettings)
-            api(libs.multiplatformSettings.coroutines)
+            implementation(libs.multiplatformSettings)
+            implementation(libs.multiplatformSettings.coroutines)
         }
 
         sourceSets["commonTest"].dependencies {

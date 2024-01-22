@@ -17,14 +17,15 @@ val sharedModule: Module = module {
     /**Create a singleton instance of ktor client*/
     single { WeatherApiClient.createWeatherApiClient(enableNetworkLogs = BuildConfig.DEBUG) }
 
+    /**Create a singleton of [WeatherApiService]*/
     singleOf(::WeatherApiService)
 
-    single {
-        MultiplatformSettingsWrapper.createSettings(context = get<Context>())
-    }
+    /**Create a singleton of Observable Settings*/
+    single { MultiplatformSettingsWrapper.createSettings(context = get<Context>()) }
 
     singleOf(::WeatherRepositoryImpl)
 
+    /**Creates a fused location client used to create an instance of [LocationServices]*/
     single {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(get<Context>())
         LocationService(context = get(), locationClient = fusedLocationClient)
