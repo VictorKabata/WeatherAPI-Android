@@ -45,7 +45,7 @@ internal class MockWeatherApiClient {
 
     private val responseHeaders = headersOf(HttpHeaders.ContentType, "application/json")
 
-    val mockDarajaHttpClient = HttpClient(MockEngine) {
+    val weatherApiClient = HttpClient(MockEngine) {
         engine {
             addHandler { request ->
                 println("URL: ${request.url}")

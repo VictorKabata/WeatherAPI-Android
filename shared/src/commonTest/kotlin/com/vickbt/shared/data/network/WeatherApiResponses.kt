@@ -1,6 +1,8 @@
 package com.vickbt.shared.data.network
 
-const val Forecast200ResponseJson="""
+import com.vickbt.shared.data.network.models.LocationDto
+
+const val Forecast200ResponseJson = """
     {
     "location": {
         "name": "Nairobi",
@@ -44,7 +46,18 @@ const val Forecast200ResponseJson="""
 }
 """
 
-const val History200ResponseJson="""
+val ForecastLocation = LocationDto(
+    name = "Nairobi",
+    region = "Nairobi, Area",
+    country = "Kenya",
+    lat = -1.28,
+    lon = 36.82,
+    tzId = "Africa/Nairobi",
+    localtimeEpoch = 1705583954,
+    localtime = "2024-01-18 16:19"
+)
+
+const val History200ResponseJson = """
     {
   "location": {
     "name": "Nairobi",
@@ -11062,3 +11075,14 @@ const val History200ResponseJson="""
   }
 }
 """
+
+val HistoryLocation = LocationDto(
+    name = "Nairobi",
+    region = "Nairobi, Area",
+    country = "Kenya",
+    lat = -1.28,
+    lon = 36.82,
+    tzId = "Africa/Nairobi",
+    localtimeEpoch = 1705916247,
+    localtime = "2024-01-22 12:37"
+)
