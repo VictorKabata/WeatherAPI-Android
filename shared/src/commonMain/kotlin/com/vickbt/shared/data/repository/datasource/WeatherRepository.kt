@@ -6,12 +6,15 @@ import com.russhwolf.settings.coroutines.getIntFlow
 import com.vickbt.shared.data.network.WeatherApiService
 import com.vickbt.shared.data.network.utils.safeApiCall
 import com.vickbt.shared.data.repository.mappers.toDomain
+import com.vickbt.shared.domain.models.ForecastWeather
+import com.vickbt.shared.domain.models.HistoryForecast
 import com.vickbt.shared.domain.utils.Constants.MEASUREMENT_KEY
 import com.vickbt.shared.domain.utils.Constants.THEME_KEY
 import com.vickbt.shared.domain.utils.MeasurementOptions
 import com.vickbt.shared.domain.utils.ThemeOptions
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
@@ -20,20 +23,18 @@ import utils.LocationService
 import kotlin.time.Duration.Companion.days
 
 @OptIn(ExperimentalSettingsApi::class)
-class WeatherRepositoryImpl(
+class WeatherRepository(
     private val weatherApiService: WeatherApiService,
     private val observableSettings: ObservableSettings,
     private val locationService: LocationService
 ) {
 
-    private val timeZone = TimeZone.currentSystemDefault()
-
     /**Return weather forecast for the next 7 days/ 1 week and maps the network response to domain classes*/
     suspend fun fetchForecastWeather(
         query: String? = null,
         language: String = "en"
-    ): Flow<Result<com.vickbt.shared.domain.models.ForecastWeather>> {
-        val location = locationService.requestLocationUpdates().first()
+    ): Flow<Result<ForecastWeather>> {
+        val location = locationService.requestLocationUpdates().firstOrNull()
         val unitOfMeasurement = MeasurementOptions.entries[getMeasurementSettings().first()]
 
         return safeApiCall {
@@ -48,11 +49,12 @@ class WeatherRepositoryImpl(
     suspend fun fetchHistoryWeather(
         query: String? = null,
         language: String = "en",
-        startDate: LocalDateTime = Clock.System.now().minus(14.days).toLocalDateTime(timeZone),
-        endDate: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)
-    ): Flow<Result<com.vickbt.shared.domain.models.HistoryForecast>> {
+        startDate: LocalDateTime = Clock.System.now().minus(14.days)
+            .toLocalDateTime(TimeZone.currentSystemDefault()),
+        endDate: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+    ): Flow<Result<HistoryForecast>> {
         return safeApiCall {
-            val location = locationService.requestLocationUpdates().first()
+            val location = locationService.requestLocationUpdates().firstOrNull()
             val unitOfMeasurement = MeasurementOptions.entries[getMeasurementSettings().first()]
 
             weatherApiService.fetchHistoryWeather(

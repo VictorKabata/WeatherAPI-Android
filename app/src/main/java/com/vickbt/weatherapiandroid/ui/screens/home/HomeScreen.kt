@@ -1,7 +1,6 @@
 package com.vickbt.weatherapiandroid.ui.screens.home
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,7 +21,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,19 +28,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
+import com.vickbt.shared.domain.utils.toImageFormat
 import com.vickbt.shared.domain.utils.toReadableFormat
+import com.vickbt.shared.domain.utils.toSpeedUnitOfMeasurement
+import com.vickbt.shared.domain.utils.toTempUnitOfMeasurement
 import com.vickbt.weatherapiandroid.R
 import com.vickbt.weatherapiandroid.ui.components.DayCondition
 import com.vickbt.weatherapiandroid.ui.components.ExtraCondition
-import com.vickbt.weatherapiandroid.utils.toImageFormat
-import com.vickbt.weatherapiandroid.utils.toSpeedUnitOfMeasurement
-import com.vickbt.weatherapiandroid.utils.toTempUnitOfMeasurement
 import org.koin.compose.koinInject
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -62,10 +61,15 @@ fun HomeScreen(
             .padding(horizontal = 12.dp, vertical = 8.dp)
     ) {
         if (homeUiState.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .testTag("loading_progress_bar")
+                    .align(Alignment.Center)
+            )
         } else if (homeUiState.forecastWeather != null) {
             Column(
                 modifier = Modifier
+                    .testTag("weather_info_column")
                     .fillMaxSize()
                     .padding(paddingValues)
                     .align(Alignment.Center)
@@ -84,6 +88,7 @@ fun HomeScreen(
                     )
                 ) {
                     Text(
+                        modifier = Modifier.testTag("location_text"),
                         text = "${homeUiState.forecastWeather.location.name}," +
                                 " ${homeUiState.forecastWeather.location.country}",
                         fontWeight = FontWeight.Black,
@@ -93,6 +98,7 @@ fun HomeScreen(
                     )
 
                     Text(
+                        modifier = Modifier.testTag("date_text"),
                         text = homeUiState.forecastWeather.location.localtime.toReadableFormat(),
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 20.sp,
@@ -207,7 +213,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    items(items = homeUiState.historyWeather?.forecast?.reversed() ?: emptyList()) {
+                    items(items = homeUiState.historyWeather?.forecast ?: emptyList()) {
                         DayCondition(
                             modifier = Modifier
                                 .width(90.dp)
@@ -223,12 +229,16 @@ fun HomeScreen(
                 //endregion
             }
         } else if (homeUiState.error != null) {
-            // ToDo: Display error
-            val context = LocalContext.current
-
-            LaunchedEffect(key1 = Unit) {
-                Toast.makeText(context, "Error: ${homeUiState.error}", Toast.LENGTH_LONG).show()
-            }
+            Text(
+                modifier = Modifier
+                    .testTag("error_text")
+                    .align(Alignment.Center)
+                    .padding(horizontal = 24.dp),
+                text = homeUiState.error,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Medium,
+                textAlign = TextAlign.Center
+            )
         }
     }
 }

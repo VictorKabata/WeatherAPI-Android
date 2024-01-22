@@ -26,12 +26,9 @@ import androidx.compose.ui.unit.sp
 fun NavigationDrawerContent(
     modifier: Modifier,
     isDarkTheme: Boolean,
-    onThemeCheckChanged: (Boolean) -> Unit,
-    isImperial: Boolean,
-    onImperialCheckChanged: (Boolean) -> Unit
+    onThemeCheckChanged: (Boolean) -> Unit
 ) {
     var isDarkThemeOn by remember { mutableStateOf(isDarkTheme) }
-    var isImperialOn by remember { mutableStateOf(isImperial) }
 
     ModalDrawerSheet(modifier = modifier) {
         Column(
@@ -67,7 +64,7 @@ fun NavigationDrawerContent(
             //endregion
 
             //region Measurement system
-            Row(
+            /*Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -90,7 +87,7 @@ fun NavigationDrawerContent(
                         onImperialCheckChanged(it)
                     }
                 )
-            }
+            }*/
             //endregion
         }
     }

@@ -30,6 +30,15 @@ android {
             )
         }
     }
+
+    testOptions {
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging = true
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -44,9 +53,8 @@ android {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+        resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+        resources.excludes.add("META-INF/*")
     }
 }
 
@@ -72,11 +80,17 @@ dependencies {
 
     implementation(libs.coil)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    testImplementation(libs.androidX.junit)
+    testImplementation(libs.android.test.core)
+    testImplementation(libs.kotlinX.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.google.truth)
+    testImplementation(libs.roboelectric)
+
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
+    androidTestImplementation(libs.mockk.android)
+
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 }

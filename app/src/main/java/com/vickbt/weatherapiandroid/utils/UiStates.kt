@@ -1,5 +1,7 @@
 package com.vickbt.weatherapiandroid.utils
 
+import com.vickbt.shared.domain.models.ForecastWeather
+import com.vickbt.shared.domain.models.HistoryForecast
 import com.vickbt.shared.domain.utils.MeasurementOptions
 import com.vickbt.shared.domain.utils.ThemeOptions
 
@@ -12,7 +14,7 @@ data class MainUiStates(
 data class HomeUiStates(
     val isLoading: Boolean = true,
     val error: String? = null,
-    val forecastWeather: com.vickbt.shared.domain.models.ForecastWeather? = null,
-    val historyWeather: com.vickbt.shared.domain.models.HistoryForecast? = null,
+    val forecastWeather: ForecastWeather? = null,
+    val historyWeather: HistoryForecast? = null,
     val unitOfMeasurement: MeasurementOptions = MeasurementOptions.METRIC
 )
