@@ -11,7 +11,6 @@ plugins {
     alias(libs.plugins.detekt)
 }
 
-
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     ktlint {

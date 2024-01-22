@@ -27,7 +27,6 @@ class WeatherApiServiceTest {
         weatherApiService = WeatherApiService(weatherApiClient = mockKtorHttpClient)
 
         currentTime = Clock.System.now()
-
     }
 
     @AfterTest
@@ -54,7 +53,7 @@ class WeatherApiServiceTest {
             endDate = currentTime.toLocalDateTime(TimeZone.currentSystemDefault())
         )
 
-        //then
+        // then
         // assertEquals(expected = HistoryLocation, actual = actualResult.location)
     }
 }

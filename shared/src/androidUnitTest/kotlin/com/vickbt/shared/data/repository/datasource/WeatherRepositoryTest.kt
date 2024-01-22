@@ -72,7 +72,6 @@ class WeatherRepositoryTest {
         )
 
         coEvery { weatherRepository.getMeasurementSettings().first() } returns 0
-
     }
 
     @AfterTest
@@ -88,7 +87,6 @@ class WeatherRepositoryTest {
         // Then
         assertTrue(result.first().isSuccess)
         assertEquals(expected = result.first().getOrNull()?.location, actual = forecastLocation)
-
     }
 
     @Test
@@ -123,6 +121,4 @@ class WeatherRepositoryTest {
             weatherRepository.fetchHistoryWeather()
         }
     }
-
-
 }

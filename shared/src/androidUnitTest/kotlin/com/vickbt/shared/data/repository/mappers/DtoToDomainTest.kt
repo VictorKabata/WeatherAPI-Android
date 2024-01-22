@@ -136,5 +136,4 @@ class DtoToDomainTest {
 
         assertIs<HistoryForecast>(actualResult)
     }
-
 }

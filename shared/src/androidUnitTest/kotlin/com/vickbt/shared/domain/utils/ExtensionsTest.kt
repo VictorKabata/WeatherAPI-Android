@@ -60,5 +60,4 @@ class ExtensionsTest {
 
             assertEquals(expected = "80 m/h", actual = result)
         }
-
 }

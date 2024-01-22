@@ -35,6 +35,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -61,9 +62,7 @@ class MainActivity : ComponentActivity() {
             val mainUiState = mainViewModel.mainUiState.collectAsState().value
 
             var locationPermissionsGranted by remember {
-                mutableStateOf(
-                    areLocationPermissionsAlreadyGranted()
-                )
+                mutableStateOf(areLocationPermissionsAlreadyGranted())
             }
             var shouldShowPermissionRationale by remember {
                 mutableStateOf(
@@ -153,7 +152,10 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             topBar = {
                                 TopAppBar(title = {}, navigationIcon = {
-                                    IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                                    IconButton(
+                                        modifier = Modifier.testTag("navigation_icon"),
+                                        onClick = { scope.launch { drawerState.open() } }
+                                    ) {
                                         Icon(
                                             imageVector = Icons.Rounded.Menu,
                                             contentDescription = getString(R.string.menu),

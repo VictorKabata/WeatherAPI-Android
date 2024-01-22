@@ -52,7 +52,6 @@ class HomeViewModelTest {
         assertThat(result.forecastWeather).isEqualTo(forecastWeather)
         assertThat(result.historyWeather).isNull()
         assertThat(result.isLoading).isFalse()
-
     }
 
     @Test
@@ -69,6 +68,5 @@ class HomeViewModelTest {
         assertThat(result.historyWeather).isNull()
         assertThat(result.error).isEqualTo("Error occurred")
         assertThat(result.isLoading).isFalse()
-
     }
 }

@@ -14,11 +14,11 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val weatherRepository: WeatherRepository) :
     ViewModel() {
 
-    val _homeUiState = MutableStateFlow(HomeUiStates(isLoading = true))
-    val homeUiState = _homeUiState.asStateFlow()
+    val homeUiStateFlow = MutableStateFlow(HomeUiStates(isLoading = true))
+    val homeUiState = homeUiStateFlow.asStateFlow()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _homeUiState.update { it.copy(isLoading = false, error = exception.message) }
+        homeUiStateFlow.update { it.copy(isLoading = false, error = exception.message) }
     }
 
     init {
@@ -31,11 +31,11 @@ class HomeViewModel(private val weatherRepository: WeatherRepository) :
         viewModelScope.launch(coroutineExceptionHandler) {
             weatherRepository.fetchForecastWeather(query = query).collect { result ->
                 result.onSuccess { forecastWeather ->
-                    _homeUiState.update {
+                    homeUiStateFlow.update {
                         it.copy(isLoading = false, forecastWeather = forecastWeather)
                     }
                 }.onFailure {
-                    _homeUiState.update { it.copy(isLoading = false, error = it.error) }
+                    homeUiStateFlow.update { it.copy(isLoading = false, error = it.error) }
                 }
             }
         }
@@ -44,18 +44,18 @@ class HomeViewModel(private val weatherRepository: WeatherRepository) :
         viewModelScope.launch(coroutineExceptionHandler) {
             weatherRepository.fetchHistoryWeather(query = query).collect { result ->
                 result.onSuccess { historyWeather ->
-                    _homeUiState.update {
+                    homeUiStateFlow.update {
                         it.copy(isLoading = false, historyWeather = historyWeather)
                     }
                 }.onFailure {
-                    _homeUiState.update { it.copy(isLoading = false, error = it.error) }
+                    homeUiStateFlow.update { it.copy(isLoading = false, error = it.error) }
                 }
             }
         }
 
     fun fetchUnitOfMeasurement() = viewModelScope.launch {
         weatherRepository.getMeasurementSettings().collect { unitsIndex ->
-            _homeUiState.update { it.copy(unitOfMeasurement = MeasurementOptions.entries[unitsIndex]) }
+            homeUiStateFlow.update { it.copy(unitOfMeasurement = MeasurementOptions.entries[unitsIndex]) }
         }
     }
 }

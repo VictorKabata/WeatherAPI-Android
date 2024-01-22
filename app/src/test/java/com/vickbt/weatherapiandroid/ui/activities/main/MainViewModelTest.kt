@@ -33,7 +33,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun getThemePreference_updates_light_theme_in_homeUiState()= runTest{
+    fun getThemePreference_updates_light_theme_in_homeUiState() = runTest {
         coEvery { weatherRepository.getThemeSettings() } returns flowOf(0)
 
         mainViewModel.getThemePreference()
@@ -42,12 +42,11 @@ class MainViewModelTest {
     }
 
     @Test
-    fun getThemePreference_updates_dark_theme_in_homeUiState()= runTest{
+    fun getThemePreference_updates_dark_theme_in_homeUiState() = runTest {
         coEvery { weatherRepository.getThemeSettings() } returns flowOf(1)
 
         mainViewModel.getThemePreference()
 
         assertThat(mainViewModel.mainUiState.value.theme).isEqualTo(ThemeOptions.DARK_THEME)
     }
-
 }
