@@ -127,7 +127,7 @@ class MainActivity : ComponentActivity() {
             val snackbarHostState = remember { SnackbarHostState() }
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-            WeatherAPIAndroidTheme(darkTheme = mainUiState?.theme == ThemeOptions.DARK_THEME) {
+            WeatherAPIAndroidTheme(darkTheme = mainUiState.theme == ThemeOptions.DARK_THEME) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
