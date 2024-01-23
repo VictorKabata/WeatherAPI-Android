@@ -13,6 +13,8 @@ The API key can be generated from this [link](https://www.weatherapi.com/login.a
 api_key = <YOUR_API_KEY>
 ```
 
+> You can download the android debug variant app from [Firebase App Distribution link](https://appdistribution.firebase.dev/i/a7250023511fefa3)
+
 # Architecture
 The app has two modules; `shared` and `app`.
 
