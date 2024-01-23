@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "42175224948",
-    "project_id": "weatherapi-android",
-    "storage_bucket": "weatherapi-android.appspot.com"
+    "project_number": "593925985830",
+    "project_id": "weatherapi-android-412108",
+    "storage_bucket": "weatherapi-android-412108.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:42175224948:android:309afd005902042c4c4521",
+        "mobilesdk_app_id": "1:593925985830:android:695f18efb925cc0a2c38e7",
         "android_client_info": {
           "package_name": "com.vickbt.weatherapiandroid"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDDAUE8ZF4ZzREOkG_g5D75Ij_lagnrMI0"
+          "current_key": "AIzaSyAkPNjueBPI_IInt5LPPBrRC5KDdfBbCtc"
         }
       ],
       "services": {
