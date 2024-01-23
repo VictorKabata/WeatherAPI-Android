@@ -2,6 +2,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.android.kotlin)
+    id("com.google.firebase.appdistribution")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -12,8 +14,16 @@ android {
         applicationId = "com.vickbt.weatherapiandroid"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = if (System.getenv("VERSION_CODE").isNullOrEmpty()) {
+            1
+        } else {
+            System.getenv("VERSION_CODE").toInt()
+        }
+        versionName = if (System.getenv("VERSION_NAME").isNullOrEmpty()) {
+            "1.0.0"
+        } else {
+            System.getenv("VERSION_NAME")?.toString()
+        }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -79,6 +89,7 @@ dependencies {
     implementation(libs.navigation.compose)
 
     implementation(libs.coil)
+    implementation(libs.firebase.analytics)
 
     testImplementation(libs.androidX.junit)
     testImplementation(libs.android.test.core)

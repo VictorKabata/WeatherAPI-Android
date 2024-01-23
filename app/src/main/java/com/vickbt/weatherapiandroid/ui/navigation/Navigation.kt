@@ -13,10 +13,5 @@ fun Navigation(navController: NavHostController, paddingValues: PaddingValues) {
         composable(route = NavigationItem.Home.route) {
             HomeScreen(paddingValues = paddingValues)
         }
-
-        /*ToDo: Set settings screen
-        composable(route = NavigationItem.Settings.route) {
-
-        }*/
     }
 }

@@ -35,7 +35,6 @@ kotlin {
         sourceSets["commonTest"].dependencies {
             implementation(kotlin("test"))
             implementation(libs.kotlinX.coroutines.test)
-            implementation(libs.mockative)
             implementation(libs.ktor.mock)
 
             implementation(libs.konveyor)
