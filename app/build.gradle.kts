@@ -14,8 +14,16 @@ android {
         applicationId = "com.vickbt.weatherapiandroid"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = if (System.getenv("VERSION_CODE").isNullOrEmpty()) {
+            1
+        } else {
+            System.getenv("VERSION_CODE").toInt()
+        }
+        versionName = if (System.getenv("VERSION_NAME").isNullOrEmpty()) {
+            "1.0.0"
+        } else {
+            System.getenv("VERSION_NAME")?.toString()
+        }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
