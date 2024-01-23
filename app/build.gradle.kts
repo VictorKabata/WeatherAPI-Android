@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.navigation.compose)
 
     implementation(libs.coil)
+    implementation(libs.firebase.analytics)
 
     testImplementation(libs.androidX.junit)
     testImplementation(libs.android.test.core)
