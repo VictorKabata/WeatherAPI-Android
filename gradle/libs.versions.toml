@@ -29,6 +29,7 @@ playServicesMaps = "18.2.0"
 multiplatformSettings = "1.1.1"
 buildKonfig = "0.13.3"
 composeMultiplatform = "1.5.11"
+splashscreen = "1.1.0-alpha02"
 konveyor = "1.0.3"
 mockk = "1.13.9"
 
@@ -94,6 +95,7 @@ play-services-location = { module = "com.google.android.gms:play-services-locati
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 multiplatformSettings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 multiplatformSettings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
+splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
 
 # Test libs
 junit = { module = "junit:junit", version.ref = "junit" }
